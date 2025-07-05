@@ -1,0 +1,1886 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>DipoleMatrixApp7</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-03-03">
+<meta name="DC.source" content="DipoleMatrixApp7.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">
+<span class="keyword">classdef</span> DipoleMatrixApp7 &lt; matlab.apps.AppBase
+
+    <span class="comment">% Свойства приложения</span>
+    <span class="keyword">properties</span> (Access = public)
+        UIFigure          <span class="typesection">matlab.ui.Figure</span>
+        GridLayout        <span class="typesection">matlab.ui.container.GridLayout </span><span class="comment">% Сетка для разделения интерфейса</span>
+        PowerSlider1      <span class="typesection">matlab.ui.control.Slider </span><span class="comment">% Мощность секции 1</span>
+        PowerSlider2      <span class="typesection">matlab.ui.control.Slider </span><span class="comment">% Мощность секции 2</span>
+        PowerSlider3      <span class="typesection">matlab.ui.control.Slider </span><span class="comment">% Мощность секции 3</span>
+        FrequencySlider   <span class="typesection">matlab.ui.control.Slider </span><span class="comment">% Единый слайдер частоты</span>
+        ThetaSlider       <span class="typesection">matlab.ui.control.Slider </span><span class="comment">% Слайдер для угла theta</span>
+        RowDropDown       <span class="typesection">matlab.ui.control.DropDown </span><span class="comment">% Выпадающий список для выбора ряда Nx</span>
+        ColumnDropDown    <span class="typesection">matlab.ui.control.DropDown </span><span class="comment">% Выпадающий список для выбора столбца Ny</span>
+        PowerLabel1       <span class="typesection">matlab.ui.control.Label</span>
+        PowerLabel2       <span class="typesection">matlab.ui.control.Label</span>
+        PowerLabel3       <span class="typesection">matlab.ui.control.Label</span>
+        FrequencyLabel    <span class="typesection">matlab.ui.control.Label</span>
+        ThetaLabel        <span class="typesection">matlab.ui.control.Label  </span><span class="comment">% Метка для угла theta</span>
+        RowLabel          <span class="typesection">matlab.ui.control.Label  </span><span class="comment">% Метка для выбора ряда Nx</span>
+        ColumnLabel       <span class="typesection">matlab.ui.control.Label  </span><span class="comment">% Метка для выбора столбца Ny</span>
+        ModeSwitch        <span class="typesection">matlab.ui.control.Switch </span><span class="comment">% Тумблер для выбора режима (X-мода или O-мода)</span>
+        UIAxes            <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% Для интенсивности матрицы</span>
+        Matrix            <span class="comment">% Матрица комплексных чисел (12x12x2)</span>
+        DirectionButton   <span class="typesection">matlab.ui.control.UIControl </span><span class="comment">% Кнопка для отладки ЭМП</span>
+        DNPButton         <span class="typesection">matlab.ui.control.UIControl </span><span class="comment">% Кнопка для построения ДН</span>
+        TextArea          <span class="typesection">matlab.ui.control.TextArea </span><span class="comment">% Область для сообщений</span>
+        <span class="comment">% Добавляем оси для графиков направленности</span>
+        AxesPsi           <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% График F_n(psi)</span>
+        AxesThetaX        <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% График F_n(theta_x)</span>
+        AxesThetaY        <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% График F_n(theta_y)</span>
+        AxesTheta3D       <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% График F_n(theta_x, theta_y)</span>
+        AxesXY            <span class="typesection">matlab.ui.control.UIAxes </span><span class="comment">% График F_n(x, y)</span>
+        SelectedRow       <span class="typesection">double </span><span class="comment">% Выбранный ряд Nx</span>
+        SelectedColumn    <span class="typesection">double </span><span class="comment">% Выбранный столбец Ny</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">methods</span> (Access = private)
+
+        <span class="comment">% Инициализация приложения</span>
+        <span class="keyword">function</span> startupFcn(app)
+            app.appendMessage(<span class="string">'Инициализация приложения...'</span>);
+            <span class="comment">% Изначальная матрица 12x12</span>
+            app.SelectedRow = 1; <span class="comment">% Начальный выбранный ряд</span>
+            app.SelectedColumn = 1; <span class="comment">% Начальный выбранный столбец</span>
+            app.Matrix = initializeMatrix(app, [300, 300, 300], app.FrequencySlider.Value, app.ThetaSlider.Value);
+            updatePlot(app); <span class="comment">% Обновляем график</span>
+            app.appendMessage(<span class="string">'График должен быть инициализирован'</span>);
+            app.appendMessage([<span class="string">''</span>]);
+            <span class="comment">% Первоначальное построение графиков направленности</span>
+            updateDirectionPlots(app);
+        <span class="keyword">end</span>
+
+        <span class="comment">% Функция добавления сообщения в TextArea</span>
+        <span class="keyword">function</span> appendMessage(app, message)
+            <span class="keyword">if</span> isempty(app.TextArea.Value)
+                app.TextArea.Value = {message};
+            <span class="keyword">else</span>
+                app.TextArea.Value = [app.TextArea.Value; {message}];
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Функция создания матрицы</span>
+        <span class="keyword">function</span> matrix = initializeMatrix(app, powers, frequency, theta)
+            matrix = zeros(12, 12, 2); <span class="comment">% Матрица 12x12x2 для двух диполей на элемент</span>
+            c = 3e8; <span class="comment">% Скорость света, м/с</span>
+            dipole_length = 34; <span class="comment">% Длина диполя, м (изменено с 25 м на 34 м)</span>
+            resonant_frequency = c / (2 * dipole_length); <span class="comment">% Резонансная частота</span>
+            resonant_frequency_MHz = resonant_frequency / 1e6; <span class="comment">% Перевод в МГц (~4.41 МГц)</span>
+
+            <span class="comment">% Резонансная характеристика (гауссова функция)</span>
+            bandwidth = 5.0; <span class="comment">% Полоса пропускания, МГц</span>
+            amplitude_factor = exp(-((frequency - resonant_frequency_MHz) / bandwidth).^2);
+
+            <span class="comment">% Шаг между диполями в метрах</span>
+            dx = 0.5; <span class="comment">% Шаг в долях длины волны</span>
+            wavelength = c / (frequency * 1e6);
+            dx_meters = dx * wavelength; <span class="comment">% Шаг в метрах</span>
+
+            <span class="comment">% Базовые амплитуды и фазы (без взаимодействия)</span>
+            base_matrix = zeros(12, 12, 2, <span class="string">'like'</span>, 1i);
+            <span class="comment">% Секция 1: столбцы 1-4</span>
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4); <span class="comment">% Базовая фаза для первого диполя</span>
+            <span class="keyword">if</span> strcmp(app.ModeSwitch.Value, <span class="string">'X-мода'</span>)
+                phase_1 = phase_base; <span class="comment">% Фаза первого диполя</span>
+                phase_2 = phase_base; <span class="comment">% Фаза второго диполя (та же, что у первого)</span>
+            <span class="keyword">else</span> <span class="comment">% O-мода</span>
+                phase_1 = phase_base; <span class="comment">% Фаза первого диполя</span>
+                phase_2 = phase_base + pi/2; <span class="comment">% Фаза второго диполя (сдвиг на pi/2)</span>
+            <span class="keyword">end</span>
+            base_matrix(:, 1:4, 1) = sqrt(powers(1)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 1:4, 2) = sqrt(powers(1)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+
+            <span class="comment">% Секция 2: столбцы 5-8</span>
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4);
+            <span class="keyword">if</span> strcmp(app.ModeSwitch.Value, <span class="string">'X-мода'</span>)
+                phase_1 = phase_base;
+                phase_2 = phase_base;
+            <span class="keyword">else</span> <span class="comment">% O-мода</span>
+                phase_1 = phase_base;
+                phase_2 = phase_base + pi/2; <span class="comment">% Фаза второго диполя (сдвиг на pi/2)</span>
+            <span class="keyword">end</span>
+            base_matrix(:, 5:8, 1) = sqrt(powers(2)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 5:8, 2) = sqrt(powers(2)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+
+            <span class="comment">% Секция 3: столбцы 9-12</span>
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4);
+            <span class="keyword">if</span> strcmp(app.ModeSwitch.Value, <span class="string">'X-мода'</span>)
+                phase_1 = phase_base;
+                phase_2 = phase_base;
+            <span class="keyword">else</span> <span class="comment">% O-мода</span>
+                phase_1 = phase_base;
+                phase_2 = phase_base + pi/2; <span class="comment">% Фаза второго диполя (сдвиг на pi/2)</span>
+            <span class="keyword">end</span>
+            base_matrix(:, 9:12, 1) = sqrt(powers(3)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 9:12, 2) = sqrt(powers(3)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+
+            <span class="comment">% Учёт взаимодействия (упрощённая модель)</span>
+            <span class="keyword">for</span> i = 1:12
+                <span class="keyword">for</span> j = 1:12
+                    <span class="keyword">for</span> dipole_idx = 1:2 <span class="comment">% Для каждого диполя в элементе</span>
+                        <span class="keyword">if</span> abs(base_matrix(i, j, dipole_idx)) &gt; 0
+                            coupling_effect = 0;
+                            <span class="keyword">for</span> m = 1:12
+                                <span class="keyword">for</span> n = 1:12
+                                    <span class="keyword">for</span> other_dipole_idx = 1:2
+                                        <span class="keyword">if</span> (m ~= i || n ~= j || dipole_idx ~= other_dipole_idx) &amp;&amp; abs(base_matrix(m, n, other_dipole_idx)) &gt; 0
+                                            <span class="comment">% Расстояние между диполями (i,j) и (m,n)</span>
+                                            dist = sqrt(((i-m)*dx_meters)^2 + ((j-n)*dx_meters)^2);
+                                            <span class="keyword">if</span> dist &gt; 0
+                                                <span class="comment">% Упрощённая модель взаимодействия: затухание ~ 1/r, фазовый сдвиг ~ k*r</span>
+                                                coupling = (1/dist) * exp(1i * (2 * pi / wavelength) * dist);
+                                                coupling_effect = coupling_effect + coupling * base_matrix(m, n, other_dipole_idx);
+                                            <span class="keyword">end</span>
+                                        <span class="keyword">end</span>
+                                    <span class="keyword">end</span>
+                                <span class="keyword">end</span>
+                            <span class="keyword">end</span>
+                            <span class="comment">% Корректируем амплитуду и фазу</span>
+                            matrix(i, j, dipole_idx) = base_matrix(i, j, dipole_idx) + 0.1 * coupling_effect;
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+                <span class="comment">% Функция для вычисления амплитудной характеристики направленности</span>
+        <span class="keyword">function</span> [psi_base, Fn_psi, theta_x, Fn_theta_x, theta_y, Fn_theta_y, theta_x_3d, theta_y_3d, Fn_3d, x_3d, y_3d, Fn_xy] = computeAmplitudePattern(app, frequency)
+            <span class="comment">% Параметры</span>
+            Nx_total = 12; <span class="comment">% Число вибраторов вдоль оси x (всего)</span>
+            Ny_total = 12; <span class="comment">% Число вибраторов вдоль оси y (всего)</span>
+            Nx = app.SelectedRow; <span class="comment">% Выбранный ряд Nx (индекс)</span>
+            Ny = app.SelectedColumn; <span class="comment">% Выбранный столбец Ny (индекс)</span>
+            d = 25; <span class="comment">% Расстояние между излучателями, м</span>
+            c = 3e8; <span class="comment">% Скорость света, м/с</span>
+            ksi = 1; <span class="comment">% Коэффициент замедления волны (в радианах, как угол)</span>
+            theta_slider = deg2rad(app.ThetaSlider.Value); <span class="comment">% Текущее значение theta (в радианах) из слайдера</span>
+            theta_offset = 34; <span class="comment">% Поправка в 34 градуса</span>
+
+            <span class="comment">% Вычисление волнового числа</span>
+            f = frequency * 1e6; <span class="comment">% Частота в Гц (перевод из МГц)</span>
+            wavelength = c / f; <span class="comment">% Длина волны, м</span>
+            k = 2 * pi / wavelength; <span class="comment">% Волновое число, радиан/м</span>
+
+            <span class="comment">% 1. Зависимость Fn от psi (обобщённая угловая переменная)</span>
+            psi_0 = (Nx_total * k * d / 2) * cos(theta_slider + theta_offset - ksi); <span class="comment">% Смещение psi</span>
+            psi_base = linspace(-10*pi, 10*pi, 1000); <span class="comment">% Базовый диапазон psi (фиксированный для графика)</span>
+            psi_shifted = psi_base + psi_0; <span class="comment">% Смещённый psi для вычисления Fn</span>
+            Fn_psi = abs(sin(psi_shifted) ./ (Nx_total * sin(psi_shifted / Nx_total)));
+            Fn_psi(isnan(Fn_psi) | isinf(Fn_psi)) = 1; <span class="comment">% Устраняем неопределённости</span>
+
+            <span class="comment">% 2. Зависимость Fn от theta_x и theta_y (для 3D-графика)</span>
+            theta_x_3d = linspace(-pi/2, pi/2, 300); <span class="comment">% Углы от -90 до 90 градусов (увеличили с 50 до 100)</span>
+            theta_y_3d = linspace(-pi/2, pi/2, 300); <span class="comment">% Углы от -90 до 90 градусов (увеличили с 50 до 100)</span>
+            [theta_x_3d, theta_y_3d] = meshgrid(theta_x_3d, theta_y_3d);
+            Fn_3d = zeros(size(theta_x_3d)); <span class="comment">% Инициализируем массив для Fn</span>
+
+            <span class="comment">% Вычисляем координаты элементов решётки</span>
+            x_positions = d * ((1:Nx_total) - (Nx_total + 1)/2); <span class="comment">% Координаты x (центрированы вокруг 0)</span>
+            y_positions = d * ((1:Ny_total) - (Ny_total + 1)/2); <span class="comment">% Координаты y (центрированы вокруг 0)</span>
+
+            <span class="comment">% Суммируем вклады всех элементов (с учётом двух диполей)</span>
+            <span class="keyword">for</span> i = 1:Nx_total
+                <span class="keyword">for</span> j = 1:Ny_total
+                    <span class="keyword">for</span> dipole_idx = 1:2
+                        A_ij = abs(app.Matrix(i, j, dipole_idx)); <span class="comment">% Амплитуда элемента (i,j) для диполя</span>
+                        phi_ij = angle(app.Matrix(i, j, dipole_idx)); <span class="comment">% Фаза элемента (i,j) для диполя</span>
+                        <span class="comment">% Угол ориентации диполя (45&deg; для первого диполя, 135&deg; для второго)</span>
+                        dipole_angle = (dipole_idx == 1) * pi/4 + (dipole_idx == 2) * (pi/4 + pi/2);
+                        <span class="comment">% Фазовый сдвиг с учётом ориентации диполя</span>
+                        phase = k * (x_positions(i) * cos(theta_x_3d + theta_offset - theta_slider - ksi) + <span class="keyword">...</span>
+                                    y_positions(j) * cos(theta_y_3d + theta_offset - ksi));
+                        <span class="comment">% Учитываем ориентацию диполя (проекция на направление theta_x, theta_y)</span>
+                        directional_factor = cos(dipole_angle - atan2(cos(theta_y_3d), cos(theta_x_3d)));
+                        Fn_3d = Fn_3d + A_ij * directional_factor .* exp(1i * (phi_ij + phase));
+                    <span class="keyword">end</span>
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+            Fn_3d = abs(Fn_3d); <span class="comment">% Модуль комплексной суммы</span>
+            max_Fn_3d = max(Fn_3d(:));
+            <span class="keyword">if</span> max_Fn_3d &gt; 0
+                Fn_3d = Fn_3d / max_Fn_3d; <span class="comment">% Нормируем на максимум</span>
+            <span class="keyword">else</span>
+                Fn_3d = zeros(size(Fn_3d)); <span class="comment">% Если все значения нулевые, устанавливаем нули</span>
+            <span class="keyword">end</span>
+
+            <span class="comment">% 2. Зависимость Fn от theta_x (срез из Fn_3d для выбранного ряда Nx)</span>
+            theta_x = linspace(-pi/2, pi/2, 181); <span class="comment">% Углы от -90 до 90 градусов (в радианах)</span>
+
+            <span class="comment">% Линейно отображаем Nx (1:12) на индексы theta_x_3d (1:100)</span>
+            nx_idx = round(1 + (Nx - 1) * (100 - 1) / (12 - 1)); <span class="comment">% Индекс для выбранного ряда Nx</span>
+            nx_idx = max(1, min(100, nx_idx)); <span class="comment">% Убедимся, что индекс в пределах допустимого</span>
+
+            <span class="comment">% Берем срез из Fn_3d вдоль фиксированного theta_x (по ряду Nx)</span>
+            Fn_theta_x = interp1(theta_x_3d(1, :), Fn_3d(nx_idx, :), theta_x, <span class="string">'linear'</span>); <span class="comment">% Интерполяция для более точного соответствия</span>
+            Fn_theta_x(isnan(Fn_theta_x)) = 0; <span class="comment">% Заменяем NaN на 0</span>
+            max_Fn_theta_x = max(Fn_theta_x(:));
+            <span class="keyword">if</span> max_Fn_theta_x &gt; 0
+                Fn_theta_x = Fn_theta_x / max_Fn_theta_x; <span class="comment">% Нормируем на максимум</span>
+            <span class="keyword">else</span>
+                Fn_theta_x = zeros(size(Fn_theta_x)); <span class="comment">% Если все значения нулевые, устанавливаем нули</span>
+            <span class="keyword">end</span>
+
+            <span class="comment">% 3. Зависимость Fn от theta_y (срез из Fn_3d для выбранного столбца Ny)</span>
+            theta_y = linspace(-pi/2, pi/2, 181); <span class="comment">% Углы от -90 до 90 градусов (в радианах)</span>
+
+            <span class="comment">% Линейно отображаем Ny (1:12) на индексы theta_y_3d (1:100)</span>
+            ny_idx = round(1 + (Ny - 1) * (100 - 1) / (12 - 1)); <span class="comment">% Индекс для выбранного столбца Ny</span>
+            ny_idx = max(1, min(100, ny_idx)); <span class="comment">% Убедимся, что индекс в пределах допустимого</span>
+
+            <span class="comment">% Берем срез из Fn_3d вдоль фиксированного theta_y (по столбцу Ny)</span>
+            Fn_theta_y = interp1(theta_y_3d(:, 1), Fn_3d(:, ny_idx), theta_y, <span class="string">'linear'</span>); <span class="comment">% Интерполяция для более точного соответствия</span>
+            Fn_theta_y(isnan(Fn_theta_y)) = 0; <span class="comment">% Заменяем NaN на 0</span>
+            max_Fn_theta_y = max(Fn_theta_y(:));
+            <span class="keyword">if</span> max_Fn_theta_y &gt; 0
+                Fn_theta_y = Fn_theta_y / max_Fn_theta_y; <span class="comment">% Нормируем на максимум</span>
+            <span class="keyword">else</span>
+                Fn_theta_y = zeros(size(Fn_theta_y)); <span class="comment">% Если все значения нулевые, устанавливаем нули</span>
+            <span class="keyword">end</span>
+
+            <span class="comment">% 5. Трёхмерное отображение Fn(x, y) в декартовых координатах</span>
+            <span class="comment">% Используем тороидальную систему координат</span>
+            R = 1; <span class="comment">% Радиус большого круга тора</span>
+            r = 0.5; <span class="comment">% Радиус малого круга тора</span>
+            x_3d = (R + r * cos(theta_y_3d)) .* cos(theta_x_3d);
+            y_3d = (R + r * cos(theta_y_3d)) .* sin(theta_x_3d);
+
+            <span class="comment">% Учитываем Якобиан перехода</span>
+            jacobian = 1 ./ (sin(theta_x_3d).^2 .* sin(theta_y_3d).^2);
+            jacobian(abs(jacobian) &lt; eps) = eps; <span class="comment">% Избегаем деления на ноль</span>
+            Fn_xy = Fn_3d .* jacobian; <span class="comment">% Умножаем на Якобиан</span>
+            Fn_xy(isnan(Fn_xy)) = 0; <span class="comment">% Заменяем NaN на 0</span>
+            max_Fn_xy = max(Fn_xy(:));
+            <span class="keyword">if</span> max_Fn_xy &gt; 0
+                Fn_xy = Fn_xy / max_Fn_xy; <span class="comment">% Нормируем на максимум</span>
+            <span class="keyword">else</span>
+                Fn_xy = zeros(size(Fn_xy)); <span class="comment">% Если все значения нулевые, устанавливаем нули</span>
+            <span class="keyword">end</span>
+
+            <span class="comment">% Ограничиваем диапазон x, y для читаемости графика</span>
+            mask = (abs(x_3d) &lt;= 5) &amp; (abs(y_3d) &lt;= 5);
+            x_3d(~mask) = NaN;
+            y_3d(~mask) = NaN;
+            Fn_xy(~mask) = NaN;
+        <span class="keyword">end</span>
+
+                   <span class="comment">% Обновление графика "Амплитуда диполей по секциям"</span>
+        <span class="keyword">function</span> updatePlot(app)
+            <span class="comment">% Вычисляем среднюю амплитуду по обоим диполям для отображения</span>
+            amplitude = mean(abs(app.Matrix), 3); <span class="comment">% Средняя амплитуда по третьему измерению (два диполя)</span>
+            amplitude = flipud(amplitude); <span class="comment">% Отражаем матрицу по вертикали</span>
+            <span class="keyword">if</span> isempty(app.UIAxes) || ~isvalid(app.UIAxes)
+                app.UIAxes = uiaxes(app.GridLayout);
+                app.UIAxes.Layout.Row = 1;
+                app.UIAxes.Layout.Column = 2;
+            <span class="keyword">end</span>
+
+            <span class="comment">% Очищаем оси</span>
+            cla(app.UIAxes);
+            <span class="comment">% Создаём тепловую карту с помощью image</span>
+            hh = image(app.UIAxes, amplitude, <span class="string">'CDataMapping'</span>, <span class="string">'scaled'</span>);
+            colormap(app.UIAxes, <span class="string">'jet'</span>);
+            colorbar(app.UIAxes);
+            axis(app.UIAxes, [0.5 12.5 0.5 12.5]); <span class="comment">% Границы для 12x12 матрицы</span>
+
+            <span class="comment">% Настраиваем метки осей</span>
+            xticks(app.UIAxes, 1:12); <span class="comment">% Метки по горизонтальной оси: 1, 2, ..., 12</span>
+            yticks(app.UIAxes, 1:12); <span class="comment">% Метки по вертикальной оси: 1, 2, ..., 12 снизу вверх</span>
+            yticklabels(app.UIAxes, string(12:-1:1)); <span class="comment">% Меняем метки по вертикали: 12 сверху, 1 снизу</span>
+
+            <span class="comment">% Добавляем сетку</span>
+            hold(app.UIAxes, <span class="string">'on'</span>);
+            <span class="keyword">for</span> k = 0.5:1:13 <span class="comment">% Обновляем диапазон сетки для 12 элементов</span>
+                plot(app.UIAxes, [k k], [0 13], <span class="string">'k-'</span>, <span class="string">'LineWidth'</span>, 0.5);
+                plot(app.UIAxes, [0 13], [k k], <span class="string">'k-'</span>, <span class="string">'LineWidth'</span>, 0.5);
+            <span class="keyword">end</span>
+            hold(app.UIAxes, <span class="string">'off'</span>);
+            title(app.UIAxes, <span class="string">'Температурная карта интенсивности сигналов'</span>);
+
+            <span class="comment">% Добавляем обработчик события нажатия на тепловую карту</span>
+            set(hh, <span class="string">'ButtonDownFcn'</span>, @(src, event) app.ElementClicked(src, event));
+
+            drawnow;
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для нажатия на элемент тепловой карты</span>
+        <span class="keyword">function</span> ElementClicked(app, src, ~)
+            <span class="comment">% Получаем координаты нажатия</span>
+            clicked_point = app.UIAxes.CurrentPoint;
+            x = round(clicked_point(1, 1));
+            y = round(clicked_point(1, 2));
+
+            <span class="comment">% Проверяем, что нажатие произошло внутри допустимых границ матрицы</span>
+            <span class="keyword">if</span> x &gt;= 1 &amp;&amp; x &lt;= 12 &amp;&amp; y &gt;= 1 &amp;&amp; y &lt;= 12
+                <span class="comment">% Открываем окно редактирования для элемента (y, x)</span>
+                app.EditElementWindow(y, x);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Создание окна редактирования элемента матрицы</span>
+        <span class="keyword">function</span> EditElementWindow(app, i, j)
+            <span class="comment">% Создаём новое окно</span>
+            editFig = uifigure(<span class="string">'Name'</span>, [<span class="string">'Редактирование элемента ('</span> num2str(i) <span class="string">','</span> num2str(j) <span class="string">')'</span>], <span class="keyword">...</span>
+                               <span class="string">'Position'</span>, [200 200 400 300], <span class="keyword">...</span>
+                               <span class="string">'CloseRequestFcn'</span>, @(src, event) delete(src));
+
+            <span class="comment">% Создаём сетку для размещения элементов интерфейса</span>
+            editGrid = uigridlayout(editFig, [5 2]);
+            editGrid.RowHeight = {30, 30, 30, 30, 30};
+            editGrid.ColumnWidth = {<span class="string">'1x'</span>, <span class="string">'1x'</span>};
+
+            <span class="comment">% Текущие значения комплексных чисел</span>
+            complex1 = app.Matrix(i, j, 1);
+            complex2 = app.Matrix(i, j, 2);
+            amp1 = abs(complex1);
+            phase1 = angle(complex1) * 180 / pi; <span class="comment">% Переводим фазу в градусы</span>
+            amp2 = abs(complex2);
+            phase2 = angle(complex2) * 180 / pi; <span class="comment">% Переводим фазу в градусы</span>
+
+            <span class="comment">% Поля для первого диполя</span>
+            label1 = uilabel(editGrid, <span class="string">'Text'</span>, <span class="string">'Диполь 1: Амплитуда'</span>, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>);
+            label1.Layout.Row = 1;
+            label1.Layout.Column = 1;
+
+            label2 = uilabel(editGrid, <span class="string">'Text'</span>, <span class="string">'Диполь 1: Фаза (градусы)'</span>, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>);
+            label2.Layout.Row = 2;
+            label2.Layout.Column = 1;
+
+            ampField1 = uieditfield(editGrid, <span class="string">'numeric'</span>, <span class="string">'Value'</span>, amp1);
+            ampField1.Layout.Row = 1;
+            ampField1.Layout.Column = 2;
+
+            phaseField1 = uieditfield(editGrid, <span class="string">'numeric'</span>, <span class="string">'Value'</span>, phase1);
+            phaseField1.Layout.Row = 2;
+            phaseField1.Layout.Column = 2;
+
+            <span class="comment">% Поля для второго диполя</span>
+            label3 = uilabel(editGrid, <span class="string">'Text'</span>, <span class="string">'Диполь 2: Амплитуда'</span>, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>);
+            label3.Layout.Row = 3;
+            label3.Layout.Column = 1;
+
+            label4 = uilabel(editGrid, <span class="string">'Text'</span>, <span class="string">'Диполь 2: Фаза (градусы)'</span>, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>);
+            label4.Layout.Row = 4;
+            label4.Layout.Column = 1;
+
+            ampField2 = uieditfield(editGrid, <span class="string">'numeric'</span>, <span class="string">'Value'</span>, amp2);
+            ampField2.Layout.Row = 3;
+            ampField2.Layout.Column = 2;
+
+            phaseField2 = uieditfield(editGrid, <span class="string">'numeric'</span>, <span class="string">'Value'</span>, phase2);
+            phaseField2.Layout.Row = 4;
+            phaseField2.Layout.Column = 2;
+
+            <span class="comment">% Кнопка сохранения</span>
+            saveButton = uibutton(editGrid, <span class="string">'Text'</span>, <span class="string">'Сохранить'</span>);
+            saveButton.Layout.Row = 5;
+            saveButton.Layout.Column = [1 2];
+            saveButton.ButtonPushedFcn = @(src, event) SaveElement(app, i, j, ampField1, phaseField1, ampField2, phaseField2, editFig);
+        <span class="keyword">end</span>
+
+        <span class="comment">% Сохранение изменений элемента матрицы</span>
+        <span class="keyword">function</span> SaveElement(app, i, j, ampField1, phaseField1, ampField2, phaseField2, editFig)
+            <span class="comment">% Получаем новые значения</span>
+            amp1 = ampField1.Value;
+            phase1 = deg2rad(phaseField1.Value); <span class="comment">% Переводим фазу из градусов в радианы</span>
+            amp2 = ampField2.Value;
+            phase2 = deg2rad(phaseField2.Value); <span class="comment">% Переводим фазу из градусов в радианы</span>
+
+            <span class="comment">% Обновляем комплексные числа</span>
+            app.Matrix(i, j, 1) = amp1 * exp(1i * phase1);
+            app.Matrix(i, j, 2) = amp2 * exp(1i * phase2);
+
+            <span class="comment">% Обновляем графики</span>
+            app.updatePlot();
+            app.updateDirectionPlots();
+
+            <span class="comment">% Закрываем окно редактирования</span>
+            delete(editFig);
+
+            <span class="comment">% Сообщаем об успешном изменении</span>
+            app.appendMessage([<span class="string">'Элемент ('</span> num2str(i) <span class="string">','</span> num2str(j) <span class="string">') обновлён'</span>]);
+        <span class="keyword">end</span>
+
+            <span class="comment">% Открытие окна редактирования всей матрицы через таблицу</span>
+        <span class="keyword">function</span> OpenMatrixEditor(app)
+            <span class="comment">% Создаём новое окно</span>
+            matrixFig = uifigure(<span class="string">'Name'</span>, <span class="string">'Редактирование матрицы'</span>, <span class="keyword">...</span>
+                                 <span class="string">'Position'</span>, [200 200 800 600], <span class="keyword">...</span>
+                                 <span class="string">'CloseRequestFcn'</span>, @(src, event) delete(src));
+
+            <span class="comment">% Создаём сетку для размещения таблицы и кнопки</span>
+            matrixGrid = uigridlayout(matrixFig, [2 1]);
+            matrixGrid.RowHeight = {<span class="string">'1x'</span>, 30};
+            matrixGrid.ColumnWidth = {<span class="string">'1x'</span>};
+
+            <span class="comment">% Подготовка данных для таблицы</span>
+            <span class="comment">% Матрица app.Matrix имеет размер 12x12x2</span>
+            <span class="comment">% Мы создадим таблицу с колонками: Столбец, Ряд, Диполь 1: Амплитуда, Диполь 1: Фаза, Диполь 2: Амплитуда, Диполь 2: Фаза</span>
+            numRows = 12 * 12; <span class="comment">% 144 элемента</span>
+            tableData = cell(numRows, 6);
+            rowIdx = 1;
+            <span class="keyword">for</span> j = 1:12 <span class="comment">% Сначала перебираем столбцы (слева направо)</span>
+                <span class="keyword">for</span> i = 1:12 <span class="comment">% Затем перебираем строки (сверху вниз)</span>
+                    <span class="comment">% Столбец и ряд</span>
+                    tableData{rowIdx, 1} = j; <span class="comment">% Столбец</span>
+                    tableData{rowIdx, 2} = i; <span class="comment">% Ряд</span>
+                    <span class="comment">% Диполь 1</span>
+                    complex1 = app.Matrix(i, j, 1);
+                    tableData{rowIdx, 3} = abs(complex1); <span class="comment">% Амплитуда</span>
+                    tableData{rowIdx, 4} = angle(complex1) * 180 / pi; <span class="comment">% Фаза в градусах</span>
+                    <span class="comment">% Диполь 2</span>
+                    complex2 = app.Matrix(i, j, 2);
+                    tableData{rowIdx, 5} = abs(complex2); <span class="comment">% Амплитуда</span>
+                    tableData{rowIdx, 6} = angle(complex2) * 180 / pi; <span class="comment">% Фаза в градусах</span>
+                    rowIdx = rowIdx + 1;
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+
+            <span class="comment">% Создаём таблицу</span>
+            matrixTable = uitable(matrixGrid);
+            matrixTable.Data = tableData;
+            matrixTable.ColumnName = {<span class="string">'Столбец'</span>, <span class="string">'Ряд'</span>, <span class="string">'Диполь 1: Амплитуда'</span>, <span class="string">'Диполь 1: Фаза (град)'</span>, <span class="string">'Диполь 2: Амплитуда'</span>, <span class="string">'Диполь 2: Фаза (град)'</span>};
+            matrixTable.ColumnEditable = [false false true true true true]; <span class="comment">% Столбец и Ряд нельзя редактировать</span>
+            matrixTable.ColumnFormat = {<span class="string">'numeric'</span>, <span class="string">'numeric'</span>, <span class="string">'numeric'</span>, <span class="string">'numeric'</span>, <span class="string">'numeric'</span>, <span class="string">'numeric'</span>};
+            matrixTable.Layout.Row = 1;
+            matrixTable.Layout.Column = 1;
+
+            <span class="comment">% Кнопка сохранения</span>
+            saveButton = uibutton(matrixGrid, <span class="string">'Text'</span>, <span class="string">'Сохранить'</span>);
+            saveButton.Layout.Row = 2;
+            saveButton.Layout.Column = 1;
+            saveButton.ButtonPushedFcn = @(src, event) SaveMatrixFromTable(app, matrixTable, matrixFig);
+        <span class="keyword">end</span>
+
+                <span class="comment">% Сохранение изменений матрицы из таблицы</span>
+        <span class="keyword">function</span> SaveMatrixFromTable(app, matrixTable, matrixFig)
+            <span class="comment">% Получаем данные из таблицы</span>
+            tableData = matrixTable.Data;
+
+            <span class="comment">% Обновляем матрицу app.Matrix</span>
+            <span class="keyword">for</span> rowIdx = 1:size(tableData, 1)
+                j = tableData{rowIdx, 1}; <span class="comment">% Столбец</span>
+                i = tableData{rowIdx, 2}; <span class="comment">% Ряд</span>
+                <span class="comment">% Диполь 1</span>
+                amp1 = tableData{rowIdx, 3};
+                phase1 = deg2rad(tableData{rowIdx, 4}); <span class="comment">% Фаза в радианах</span>
+                app.Matrix(i, j, 1) = amp1 * exp(1i * phase1);
+                <span class="comment">% Диполь 2</span>
+                amp2 = tableData{rowIdx, 5};
+                phase2 = deg2rad(tableData{rowIdx, 6}); <span class="comment">% Фаза в радианах</span>
+                app.Matrix(i, j, 2) = amp2 * exp(1i * phase2);
+            <span class="keyword">end</span>
+
+            <span class="comment">% Обновляем графики</span>
+            app.updatePlot();
+            app.updateDirectionPlots();
+
+            <span class="comment">% Закрываем окно редактирования</span>
+            delete(matrixFig);
+
+            <span class="comment">% Сообщаем об успешном изменении</span>
+            app.appendMessage(<span class="string">'Матрица обновлена через таблицу'</span>);
+        <span class="keyword">end</span>
+
+        <span class="comment">% Обновление графиков направленности</span>
+        <span class="keyword">function</span> updateDirectionPlots(app)
+            frequency = app.FrequencySlider.Value;
+            [psi_base, Fn_psi, theta_x, Fn_theta_x, theta_y, Fn_theta_y, theta_x_3d, theta_y_3d, Fn_3d, x_3d, y_3d, Fn_xy] = computeAmplitudePattern(app, frequency);
+
+            <span class="comment">% График 1: Fn(psi)</span>
+            cla(app.AxesPsi); <span class="comment">% Очищаем оси перед перерисовкой</span>
+            plot(app.AxesPsi, psi_base, Fn_psi, <span class="string">'b-'</span>);
+            xlabel(app.AxesPsi, <span class="string">'\psi (радианы)'</span>);
+            ylabel(app.AxesPsi, <span class="string">'F_n(\psi)'</span>);
+            title(app.AxesPsi, <span class="string">'F_n( \psi)'</span>);
+            grid(app.AxesPsi, <span class="string">'on'</span>)
+
+            <span class="comment">% График 2: Fn(theta_x) (вдоль оси x)</span>
+            cla(app.AxesThetaX); <span class="comment">% Очищаем оси перед перерисовкой</span>
+            plot(app.AxesThetaX, rad2deg(theta_x), Fn_theta_x, <span class="string">'r-'</span>);
+            xlabel(app.AxesThetaX, <span class="string">'\theta_x (градусы)'</span>);
+            ylabel(app.AxesThetaX, <span class="string">'F_n(\theta_x) (нормализованная)'</span>);
+            title(app.AxesThetaX, [<span class="string">'F_n(\theta_x) (ряд '</span> num2str(app.SelectedRow) <span class="string">')'</span>]);
+            grid(app.AxesThetaX, <span class="string">'on'</span>);
+
+            <span class="comment">% График 3: Fn(theta_y) (вдоль оси y)</span>
+            cla(app.AxesThetaY); <span class="comment">% Очищаем оси перед перерисовкой</span>
+            plot(app.AxesThetaY, rad2deg(theta_y), Fn_theta_y, <span class="string">'g-'</span>);
+            xlabel(app.AxesThetaY, <span class="string">'\theta_y (градусы)'</span>);
+            ylabel(app.AxesThetaY, <span class="string">'F_n(\theta_y) (нормализованная)'</span>);
+            title(app.AxesThetaY, [<span class="string">'F_n(\theta_y) (столбец '</span> num2str(app.SelectedColumn) <span class="string">')'</span>]);
+            grid(app.AxesThetaY, <span class="string">'on'</span>);
+
+            <span class="comment">% График 4: 3D отображение Fn(theta_x, theta_y) для всей решётки</span>
+            cla(app.AxesTheta3D); <span class="comment">% Очищаем оси перед перерисовкой</span>
+            surf(app.AxesTheta3D, rad2deg(theta_x_3d), rad2deg(theta_y_3d), Fn_3d, <span class="string">'EdgeColor'</span>, <span class="string">'interp'</span>);
+            xlabel(app.AxesTheta3D, <span class="string">'\theta_x (градусы)'</span>);
+            ylabel(app.AxesTheta3D, <span class="string">'\theta_y (градусы)'</span>);
+            zlabel(app.AxesTheta3D, <span class="string">'F_n(\theta_x, \theta_y)'</span>);
+            title(app.AxesTheta3D, <span class="string">'F_n(\theta_x, \theta_y)'</span>);
+            colormap(app.AxesTheta3D, <span class="string">'jet'</span>);
+            colorbar(app.AxesTheta3D);
+            grid(app.AxesTheta3D, <span class="string">'on'</span>);
+
+            <span class="comment">% График 5: 3D отображение Fn(x, y)</span>
+            cla(app.AxesXY); <span class="comment">% Очищаем оси перед перерисовкой</span>
+            surf(app.AxesXY, x_3d, y_3d, Fn_xy, <span class="string">'EdgeColor'</span>, <span class="string">'interp'</span>);
+            xlabel(app.AxesXY, <span class="string">'x'</span>);
+            ylabel(app.AxesXY, <span class="string">'y'</span>);
+            zlabel(app.AxesXY, <span class="string">'F_n(x, y)'</span>);
+            title(app.AxesXY, <span class="string">'F_n(x, y)'</span>);
+            colormap(app.AxesXY, <span class="string">'jet'</span>);
+            colorbar(app.AxesXY);
+            grid(app.AxesXY, <span class="string">'on'</span>);
+
+            drawnow;
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для слайдера мощности секции 1</span>
+        <span class="keyword">function</span> PowerSlider1ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel1.Text = [<span class="string">'Мощность ПКВ-250-1 = '</span> num2str(powers(1), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage([<span class="string">'Изменена мощность ПКВ-250-1 на '</span> num2str(powers(1), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>]);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для слайдера мощности секции 2</span>
+        <span class="keyword">function</span> PowerSlider2ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel2.Text = [<span class="string">'Мощность ПКВ-250-2 = '</span> num2str(powers(2), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage([<span class="string">'Изменена мощность ПКВ-250-2 на '</span> num2str(powers(2), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>]);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для слайдера мощности секции 3</span>
+        <span class="keyword">function</span> PowerSlider3ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel3.Text = [<span class="string">'Мощность ПКВ-250-3 = '</span> num2str(powers(3), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage([<span class="string">'Изменена мощность ПКВ-250-3 на '</span> num2str(powers(3), <span class="string">'%.2f'</span>) <span class="string">' кВт'</span>]);
+
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+<span class="comment">% Callback для слайдера частоты</span>
+        <span class="keyword">function</span> FrequencySliderValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.FrequencyLabel.Text = [<span class="string">'Частота передатчиков = '</span> num2str(frequency, <span class="string">'%.2f'</span>) <span class="string">' МГц'</span>];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+
+            <span class="comment">% Вычисляем длину волны и волновое число</span>
+            c = 3e8; <span class="comment">% Скорость света, м/с</span>
+            f = frequency * 1e6; <span class="comment">% Частота в Гц (перевод из МГц)</span>
+            wavelength = c / f; <span class="comment">% Длина волны, м</span>
+            k = 2 * pi / wavelength; <span class="comment">% Волновое число, радиан/м</span>
+
+            <span class="comment">% Выводим сообщения</span>
+            app.appendMessage([<span class="string">''</span>]);
+            app.appendMessage([<span class="string">'Изменена частота на '</span> num2str(frequency, <span class="string">'%.2f'</span>) <span class="string">' МГц'</span>]);
+            app.appendMessage([<span class="string">'Длина волны: '</span> num2str(wavelength) <span class="string">' м'</span>]);
+            app.appendMessage([<span class="string">'Волновое число k: '</span> num2str(k) <span class="string">' радиан/м'</span>]);
+            app.appendMessage([<span class="string">''</span>]);
+
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для слайдера угла theta</span>
+        <span class="keyword">function</span> ThetaSliderValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.appendMessage([<span class="string">''</span>]);
+            app.ThetaLabel.Text = [<span class="string">'Угол фазирования = '</span> num2str(theta, <span class="string">'%.2f'</span>) <span class="string">' градусов'</span>];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage([<span class="string">'Изменён угол фазирования θ на значение '</span> num2str(theta, <span class="string">'%.2f'</span>) <span class="string">' градусов'</span>]);
+            app.appendMessage([<span class="string">''</span>]);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для выпадающего списка ряда Nx</span>
+        <span class="keyword">function</span> RowDropDownValueChanged(app, ~)
+            app.SelectedRow = str2double(app.RowDropDown.Value);
+            app.appendMessage([<span class="string">''</span>]);
+            app.appendMessage([<span class="string">'Выбран ряд Nx = '</span> num2str(app.SelectedRow)]);
+            app.appendMessage([<span class="string">''</span>]);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для выпадающего списка столбца Ny</span>
+        <span class="keyword">function</span> ColumnDropDownValueChanged(app, ~)
+            app.SelectedColumn = str2double(app.ColumnDropDown.Value);
+            app.appendMessage([<span class="string">''</span>]);
+            app.appendMessage([<span class="string">'Выбран столбец Ny = '</span> num2str(app.SelectedColumn)]);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для кнопки отладки ЭМП</span>
+        <span class="keyword">function</span> DirectionButtonPushed(app, ~)
+            app.appendMessage(<span class="string">'Запрос параметров ЭМП'</span>);
+            frequency = app.FrequencySlider.Value;
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+
+            <span class="comment">% Вычисляем параметры для отладочного вывода</span>
+            c = 3e8; <span class="comment">% Скорость света, м/с</span>
+            f = frequency * 1e6; <span class="comment">% Частота в Гц</span>
+            wavelength = c / f; <span class="comment">% Длина волны, м</span>
+            k = 2 * pi / wavelength; <span class="comment">% Волновое число, радиан/м</span>
+
+            <span class="comment">% Максимум интенсивности в дальней зоне (используем Fn_3d)</span>
+            [~, ~, ~, ~, ~, ~, ~, ~, Fn_3d, ~, ~, ~] = computeAmplitudePattern(app, frequency);
+            max_intensity_dB = 10 * log10(max(Fn_3d(:))); <span class="comment">% Максимум в дБ</span>
+
+            <span class="comment">% Выводим информацию</span>
+            app.appendMessage([<span class="string">'Мощность ПКВ-250-1: '</span> num2str(powers(1)) <span class="string">' кВт'</span>]);
+            app.appendMessage([<span class="string">'Мощность ПКВ-250-2: '</span> num2str(powers(2)) <span class="string">' кВт'</span>]);
+            app.appendMessage([<span class="string">'Мощность ПКВ-250-3: '</span> num2str(powers(3)) <span class="string">' кВт'</span>]);
+            app.appendMessage([<span class="string">''</span>]);
+            app.appendMessage([<span class="string">'Частота излучения: '</span> num2str(frequency) <span class="string">' МГц'</span>]);
+            app.appendMessage([<span class="string">'Длина волны: '</span> num2str(wavelength) <span class="string">' м'</span>]);
+            app.appendMessage([<span class="string">'Волновое число k: '</span> num2str(k) <span class="string">' радиан/м'</span>]);
+            app.appendMessage([<span class="string">''</span>]);
+            app.appendMessage([<span class="string">'Максимум интенсивности в дальней зоне: '</span> num2str(max_intensity_dB) <span class="string">' дБ'</span>]);
+            app.appendMessage([<span class="string">''</span>]);
+            drawnow;
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для тумблера режима (X-мода или O-мода)</span>
+        <span class="keyword">function</span> ModeSwitchValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.appendMessage([<span class="string">'Изменён режим на '</span> app.ModeSwitch.Value]);
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">% Callback для кнопки построения диаграммы направленности</span>
+        <span class="keyword">function</span> DNPButtonPushed(app, ~)
+            app.appendMessage(<span class="string">'Построение характеристик направленности...'</span>);
+            updateDirectionPlots(app); <span class="comment">% Обновляем графики направленности</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">methods</span> (Access = public)
+
+        <span class="comment">% Конструктор приложения</span>
+        <span class="keyword">function</span> app = DipoleMatrixApp7
+            <span class="comment">% Создаем окно</span>
+            app.UIFigure = uifigure(<span class="string">'Name'</span>, <span class="string">'Модель нагревного стенда СУРА'</span>);
+            app.UIFigure.Position = [100 100 1366 865];
+
+            <span class="comment">% Создаём сетку 2&times;3 для разделения интерфейса</span>
+            app.GridLayout = uigridlayout(app.UIFigure, [2 3]);
+            app.GridLayout.RowHeight = {<span class="string">'1x'</span>, <span class="string">'1x'</span>};
+            app.GridLayout.ColumnWidth = {<span class="string">'1x'</span>, <span class="string">'2x'</span>, <span class="string">'5x'</span>};
+            app.GridLayout.RowSpacing = 5; <span class="comment">% Расстояние между строками</span>
+            app.GridLayout.ColumnSpacing = 5; <span class="comment">% Расстояние между столбцами</span>
+            app.GridLayout.BackgroundColor = [0.7 0.7 0.7]; <span class="comment">% Светло-серая линия разделения</span>
+
+            <span class="comment">% Левая верхняя часть: Слайдеры и кнопки</span>
+            controlsPanel = uipanel(app.GridLayout);
+            controlsPanel.Layout.Row = 1;
+            controlsPanel.Layout.Column = 1;
+            controlsPanel.Title = <span class="string">'Блок управления стендом СУРА'</span>;
+            controlsPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            <span class="comment">% Слайдеры и метки для секции 1</span>
+            app.PowerLabel1 = uilabel(controlsPanel);
+            app.PowerLabel1.Position = [20 360 200 22];
+            app.PowerLabel1.Text = <span class="string">'Мощность ПКВ-250-1, кВт'</span>;
+
+            app.PowerSlider1 = uislider(controlsPanel);
+            app.PowerSlider1.Limits = [0 300];
+            app.PowerSlider1.Value = 6.25;
+            app.PowerSlider1.Position = [20 350 275 3];
+            app.PowerSlider1.MajorTicks = [0:50:300];
+            app.PowerSlider1.ValueChangedFcn = @(src, event) app.PowerSlider1ValueChanged;
+
+            <span class="comment">% Слайдеры и метки для секции 2</span>
+            app.PowerLabel2 = uilabel(controlsPanel);
+            app.PowerLabel2.Position = [20 295 200 22];
+            app.PowerLabel2.Text = <span class="string">'Мощность ПКВ-250-2, кВт'</span>;
+
+            app.PowerSlider2 = uislider(controlsPanel);
+            app.PowerSlider2.Limits = [0 300];
+            app.PowerSlider2.Value = 6.25;
+            app.PowerSlider2.Position = [20 285 275 3];
+            app.PowerSlider2.MajorTicks = [0:50:300];
+            app.PowerSlider2.ValueChangedFcn = @(src, event) app.PowerSlider2ValueChanged;
+
+            <span class="comment">% Слайдеры и метки для секции 3</span>
+            app.PowerLabel3 = uilabel(controlsPanel);
+            app.PowerLabel3.Position = [20 230 200 30];
+            app.PowerLabel3.Text = <span class="string">'Мощность ПКВ-250-3, кВт'</span>;
+
+            app.PowerSlider3 = uislider(controlsPanel);
+            app.PowerSlider3.Limits = [0 300];
+            app.PowerSlider3.Value = 6.25;
+            app.PowerSlider3.Position = [20 220 275 22];
+            app.PowerSlider3.MajorTicks = [0:50:300];
+            app.PowerSlider3.ValueChangedFcn = @(src, event) app.PowerSlider3ValueChanged;
+
+            <span class="comment">% Единый слайдер и метка для частоты</span>
+            app.FrequencyLabel = uilabel(controlsPanel);
+            app.FrequencyLabel.Position = [20 170 200 22];
+            app.FrequencyLabel.Text = <span class="string">'Частота передатчиков, МГц'</span>;
+
+            app.FrequencySlider = uislider(controlsPanel);
+            app.FrequencySlider.Limits = [3 10];
+            app.FrequencySlider.Value = 5;
+            app.FrequencySlider.Position = [20 160 275 3];
+            app.FrequencySlider.MajorTicks = [3:1:10];
+            app.FrequencySlider.ValueChangedFcn = @(src, event) app.FrequencySliderValueChanged;
+
+            <span class="comment">% Слайдер и метка для угла theta</span>
+            app.ThetaLabel = uilabel(controlsPanel);
+            app.ThetaLabel.Position = [20 110 200 22];
+            app.ThetaLabel.Text = <span class="string">'Угол фазирования, градусы'</span>;
+
+            app.ThetaSlider = uislider(controlsPanel);
+            app.ThetaSlider.Limits = [-40 40];
+            app.ThetaSlider.Value = 0; <span class="comment">% Начальное значение 0 градусов</span>
+            app.ThetaSlider.Position = [20 100 275 3];
+            app.ThetaSlider.MajorTicks = [-40:10:40];
+            app.ThetaSlider.ValueChangedFcn = @(src, event) app.ThetaSliderValueChanged;
+
+            <span class="comment">% Выпадающий список для выбора ряда Nx</span>
+            app.RowLabel = uilabel(controlsPanel);
+            app.RowLabel.Position = [50 45 200 22];
+            app.RowLabel.Text = <span class="string">'Выбор ряда Nx'</span>;
+
+            app.RowDropDown = uidropdown(controlsPanel);
+            app.RowDropDown.Items = string(1:12); <span class="comment">% Список рядов от 1 до 12</span>
+            app.RowDropDown.Value = <span class="string">'1'</span>; <span class="comment">% Начальное значение</span>
+            app.RowDropDown.Position = [50 25 90 22];
+            app.RowDropDown.ValueChangedFcn = @(src, event) app.RowDropDownValueChanged;
+
+            <span class="comment">% Выпадающий список для выбора столбца Ny</span>
+            app.ColumnLabel = uilabel(controlsPanel);
+            app.ColumnLabel.Position = [170 45 200 22];
+            app.ColumnLabel.Text = <span class="string">'Выбор столбца Ny'</span>;
+
+            app.ColumnDropDown = uidropdown(controlsPanel);
+            app.ColumnDropDown.Items = string(1:12); <span class="comment">% Список столбцов от 1 до 12</span>
+            app.ColumnDropDown.Value = <span class="string">'1'</span>; <span class="comment">% Начальное значение</span>
+            app.ColumnDropDown.Position = [170 25 90 22];
+            app.ColumnDropDown.ValueChangedFcn = @(src, event) app.ColumnDropDownValueChanged;
+
+            <span class="comment">% Тумблер для выбора режима (X-мода или O-мода)</span>
+            app.ModeSwitch = uiswitch(controlsPanel, <span class="string">'slider'</span>);
+            app.ModeSwitch.Position = [130 -5 90 22];
+            app.ModeSwitch.Items = {<span class="string">'X-мода'</span>, <span class="string">'O-мода'</span>};
+            app.ModeSwitch.Value = <span class="string">'X-мода'</span>; <span class="comment">% Начальное значение</span>
+            app.ModeSwitch.ValueChangedFcn = @(src, event) app.ModeSwitchValueChanged;
+
+            <span class="comment">% Кнопка для отладки ЭМП</span>
+            app.DirectionButton = uicontrol(controlsPanel, <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>);
+            app.DirectionButton.String = <span class="string">'Отладочный вывод ЭМП'</span>;
+            app.DirectionButton.Position = [20 -30 90 22];
+            app.DirectionButton.Callback = @(src, event) app.DirectionButtonPushed(app);
+
+            <span class="comment">% Кнопка для построения диаграммы направленности</span>
+            app.DNPButton = uicontrol(controlsPanel, <span class="string">'Style'</span>, <span class="string">'pushbutton'</span>);
+            app.DNPButton.String = <span class="string">'Построение ДН'</span>;
+            app.DNPButton.Position = [130 -30 90 22];
+            app.DNPButton.Callback = @(src, event) app.DNPButtonPushed(app);
+
+            <span class="comment">% Средняя верхняя часть: График "Амплитуда диполей по секциям"</span>
+            intensityPanel = uipanel(app.GridLayout);
+            intensityPanel.Layout.Row = 1;
+            intensityPanel.Layout.Column = 2;
+            intensityPanel.Title = <span class="string">'Блок управления и мониторинга параметров сигналов излучателей'</span>;
+            intensityPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            app.UIAxes = uiaxes(intensityPanel);
+            app.UIAxes.Position = [10 40 400 270]; <span class="comment">% Уменьшаем высоту графика, чтобы уместить кнопку</span>
+
+            <span class="comment">% Добавляем кнопку "Ввод данных" под тепловой картой</span>
+            dataButton = uibutton(intensityPanel, <span class="string">'Text'</span>, <span class="string">'Ввод данных'</span>);
+            dataButton.Position = [25 140 100 22];
+            dataButton.ButtonPushedFcn = @(src, event) app.OpenMatrixEditor();
+
+            <span class="comment">% Левая нижняя часть: Центр контроля и отладки</span>
+            debugPanel = uipanel(app.GridLayout);
+            debugPanel.Layout.Row = 2;
+            debugPanel.Layout.Column = [1 2];
+            debugPanel.Title = <span class="string">'Центр контроля и отладки'</span>;
+            debugPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            app.TextArea = uitextarea(debugPanel);
+            app.TextArea.Position = [10 10 580 150];
+            app.TextArea.Editable = <span class="string">'off'</span>;
+
+            <span class="comment">% Правая часть: Графики направленности</span>
+            directionPanel = uipanel(app.GridLayout);
+            directionPanel.Layout.Row = [1 2];
+            directionPanel.Layout.Column = 3;
+            directionPanel.Title = <span class="string">'Поле в дальней зоне'</span>;
+            directionPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            <span class="comment">% Создаём внутреннюю сетку для графиков направленности</span>
+            directionGrid = uigridlayout(directionPanel, [2 3]);
+            directionGrid.RowHeight = {<span class="string">'1x'</span>, <span class="string">'1x'</span>};
+            directionGrid.ColumnWidth = {<span class="string">'1x'</span>, <span class="string">'1x'</span>, <span class="string">'1x'</span>};
+            directionGrid.RowSpacing = 5;
+            directionGrid.ColumnSpacing = 5;
+
+            <span class="comment">% Создаём оси для графиков направленности</span>
+            app.AxesPsi = uiaxes(directionGrid);
+            app.AxesPsi.Layout.Row = 1;
+            app.AxesPsi.Layout.Column = 1;
+
+            app.AxesThetaX = uiaxes(directionGrid);
+            app.AxesThetaX.Layout.Row = 1;
+            app.AxesThetaX.Layout.Column = 2;
+
+            app.AxesThetaY = uiaxes(directionGrid);
+            app.AxesThetaY.Layout.Row = 1;
+            app.AxesThetaY.Layout.Column = 3;
+
+            app.AxesTheta3D = uiaxes(directionGrid);
+            app.AxesTheta3D.Layout.Row = 2;
+            app.AxesTheta3D.Layout.Column = [1 2];
+
+            app.AxesXY = uiaxes(directionGrid);
+            app.AxesXY.Layout.Row = 2;
+            app.AxesXY.Layout.Column = 3;
+
+            <span class="comment">% Инициализация</span>
+            startupFcn(app);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="comment">% Запуск приложения</span>
+    <span class="keyword">methods</span> (Static)
+        <span class="keyword">function</span> run()
+            app = DipoleMatrixApp7;
+            disp(<span class="string">'Интерфейс запущен.'</span>);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">
+ans = 
+
+  DipoleMatrixApp7 with properties:
+
+           UIFigure: [1&times;1 Figure]
+         GridLayout: [1&times;1 GridLayout]
+       PowerSlider1: [1&times;1 Slider]
+       PowerSlider2: [1&times;1 Slider]
+       PowerSlider3: [1&times;1 Slider]
+    FrequencySlider: [1&times;1 Slider]
+        ThetaSlider: [1&times;1 Slider]
+        RowDropDown: [1&times;1 DropDown]
+     ColumnDropDown: [1&times;1 DropDown]
+        PowerLabel1: [1&times;1 Label]
+        PowerLabel2: [1&times;1 Label]
+        PowerLabel3: [1&times;1 Label]
+     FrequencyLabel: [1&times;1 Label]
+         ThetaLabel: [1&times;1 Label]
+           RowLabel: [1&times;1 Label]
+        ColumnLabel: [1&times;1 Label]
+         ModeSwitch: [1&times;1 Switch]
+             UIAxes: [1&times;1 UIAxes]
+             Matrix: [12&times;12&times;2 double]
+    DirectionButton: [1&times;1 UIControl]
+          DNPButton: [1&times;1 UIControl]
+           TextArea: [1&times;1 TextArea]
+            AxesPsi: [1&times;1 UIAxes]
+         AxesThetaX: [1&times;1 UIAxes]
+         AxesThetaY: [1&times;1 UIAxes]
+        AxesTheta3D: [1&times;1 UIAxes]
+             AxesXY: [1&times;1 UIAxes]
+        SelectedRow: 1
+     SelectedColumn: 1
+
+</pre>
+<img vspace="5" hspace="5" src="DipoleMatrixApp7_01.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+classdef DipoleMatrixApp7 < matlab.apps.AppBase
+
+    % Свойства приложения
+    properties (Access = public)
+        UIFigure          matlab.ui.Figure
+        GridLayout        matlab.ui.container.GridLayout % Сетка для разделения интерфейса
+        PowerSlider1      matlab.ui.control.Slider % Мощность секции 1
+        PowerSlider2      matlab.ui.control.Slider % Мощность секции 2
+        PowerSlider3      matlab.ui.control.Slider % Мощность секции 3
+        FrequencySlider   matlab.ui.control.Slider % Единый слайдер частоты
+        ThetaSlider       matlab.ui.control.Slider % Слайдер для угла theta
+        RowDropDown       matlab.ui.control.DropDown % Выпадающий список для выбора ряда Nx
+        ColumnDropDown    matlab.ui.control.DropDown % Выпадающий список для выбора столбца Ny
+        PowerLabel1       matlab.ui.control.Label
+        PowerLabel2       matlab.ui.control.Label
+        PowerLabel3       matlab.ui.control.Label
+        FrequencyLabel    matlab.ui.control.Label
+        ThetaLabel        matlab.ui.control.Label  % Метка для угла theta
+        RowLabel          matlab.ui.control.Label  % Метка для выбора ряда Nx
+        ColumnLabel       matlab.ui.control.Label  % Метка для выбора столбца Ny
+        ModeSwitch        matlab.ui.control.Switch % Тумблер для выбора режима (X-мода или O-мода)
+        UIAxes            matlab.ui.control.UIAxes % Для интенсивности матрицы
+        Matrix            % Матрица комплексных чисел (12x12x2)
+        DirectionButton   matlab.ui.control.UIControl % Кнопка для отладки ЭМП
+        DNPButton         matlab.ui.control.UIControl % Кнопка для построения ДН
+        TextArea          matlab.ui.control.TextArea % Область для сообщений
+        % Добавляем оси для графиков направленности
+        AxesPsi           matlab.ui.control.UIAxes % График F_n(psi)
+        AxesThetaX        matlab.ui.control.UIAxes % График F_n(theta_x)
+        AxesThetaY        matlab.ui.control.UIAxes % График F_n(theta_y)
+        AxesTheta3D       matlab.ui.control.UIAxes % График F_n(theta_x, theta_y)
+        AxesXY            matlab.ui.control.UIAxes % График F_n(x, y)
+        SelectedRow       double % Выбранный ряд Nx
+        SelectedColumn    double % Выбранный столбец Ny
+    end
+
+    methods (Access = private)
+
+        % Инициализация приложения
+        function startupFcn(app)
+            app.appendMessage('Инициализация приложения...');
+            % Изначальная матрица 12x12
+            app.SelectedRow = 1; % Начальный выбранный ряд
+            app.SelectedColumn = 1; % Начальный выбранный столбец
+            app.Matrix = initializeMatrix(app, [300, 300, 300], app.FrequencySlider.Value, app.ThetaSlider.Value);
+            updatePlot(app); % Обновляем график
+            app.appendMessage('График должен быть инициализирован');
+            app.appendMessage(['']);
+            % Первоначальное построение графиков направленности
+            updateDirectionPlots(app);
+        end
+
+        % Функция добавления сообщения в TextArea
+        function appendMessage(app, message)
+            if isempty(app.TextArea.Value)
+                app.TextArea.Value = {message};
+            else
+                app.TextArea.Value = [app.TextArea.Value; {message}];
+            end
+        end
+
+        % Функция создания матрицы
+        function matrix = initializeMatrix(app, powers, frequency, theta)
+            matrix = zeros(12, 12, 2); % Матрица 12x12x2 для двух диполей на элемент
+            c = 3e8; % Скорость света, м/с
+            dipole_length = 34; % Длина диполя, м (изменено с 25 м на 34 м)
+            resonant_frequency = c / (2 * dipole_length); % Резонансная частота
+            resonant_frequency_MHz = resonant_frequency / 1e6; % Перевод в МГц (~4.41 МГц)
+            
+            % Резонансная характеристика (гауссова функция)
+            bandwidth = 5.0; % Полоса пропускания, МГц
+            amplitude_factor = exp(-((frequency - resonant_frequency_MHz) / bandwidth).^2);
+            
+            % Шаг между диполями в метрах
+            dx = 0.5; % Шаг в долях длины волны
+            wavelength = c / (frequency * 1e6);
+            dx_meters = dx * wavelength; % Шаг в метрах
+            
+            % Базовые амплитуды и фазы (без взаимодействия)
+            base_matrix = zeros(12, 12, 2, 'like', 1i);
+            % Секция 1: столбцы 1-4
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4); % Базовая фаза для первого диполя
+            if strcmp(app.ModeSwitch.Value, 'X-мода')
+                phase_1 = phase_base; % Фаза первого диполя
+                phase_2 = phase_base; % Фаза второго диполя (та же, что у первого)
+            else % O-мода
+                phase_1 = phase_base; % Фаза первого диполя
+                phase_2 = phase_base + pi/2; % Фаза второго диполя (сдвиг на pi/2)
+            end
+            base_matrix(:, 1:4, 1) = sqrt(powers(1)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 1:4, 2) = sqrt(powers(1)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+            
+            % Секция 2: столбцы 5-8
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4);
+            if strcmp(app.ModeSwitch.Value, 'X-мода')
+                phase_1 = phase_base;
+                phase_2 = phase_base;
+            else % O-мода
+                phase_1 = phase_base;
+                phase_2 = phase_base + pi/2; % Фаза второго диполя (сдвиг на pi/2)
+            end
+            base_matrix(:, 5:8, 1) = sqrt(powers(2)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 5:8, 2) = sqrt(powers(2)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+            
+            % Секция 3: столбцы 9-12
+            amplitude_variation = 1 + 0.1 * rand(12, 4);
+            phase_base = 2 * pi * frequency * (dipole_length / c) * rand(12, 4);
+            if strcmp(app.ModeSwitch.Value, 'X-мода')
+                phase_1 = phase_base;
+                phase_2 = phase_base;
+            else % O-мода
+                phase_1 = phase_base;
+                phase_2 = phase_base + pi/2; % Фаза второго диполя (сдвиг на pi/2)
+            end
+            base_matrix(:, 9:12, 1) = sqrt(powers(3)) * amplitude_factor * amplitude_variation .* exp(1i * phase_1);
+            base_matrix(:, 9:12, 2) = sqrt(powers(3)) * amplitude_factor * amplitude_variation .* exp(1i * phase_2);
+            
+            % Учёт взаимодействия (упрощённая модель)
+            for i = 1:12
+                for j = 1:12
+                    for dipole_idx = 1:2 % Для каждого диполя в элементе
+                        if abs(base_matrix(i, j, dipole_idx)) > 0
+                            coupling_effect = 0;
+                            for m = 1:12
+                                for n = 1:12
+                                    for other_dipole_idx = 1:2
+                                        if (m ~= i || n ~= j || dipole_idx ~= other_dipole_idx) && abs(base_matrix(m, n, other_dipole_idx)) > 0
+                                            % Расстояние между диполями (i,j) и (m,n)
+                                            dist = sqrt(((i-m)*dx_meters)^2 + ((j-n)*dx_meters)^2);
+                                            if dist > 0
+                                                % Упрощённая модель взаимодействия: затухание ~ 1/r, фазовый сдвиг ~ k*r
+                                                coupling = (1/dist) * exp(1i * (2 * pi / wavelength) * dist);
+                                                coupling_effect = coupling_effect + coupling * base_matrix(m, n, other_dipole_idx);
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            % Корректируем амплитуду и фазу
+                            matrix(i, j, dipole_idx) = base_matrix(i, j, dipole_idx) + 0.1 * coupling_effect;
+                        end
+                    end
+                end
+            end
+        end
+
+                % Функция для вычисления амплитудной характеристики направленности
+        function [psi_base, Fn_psi, theta_x, Fn_theta_x, theta_y, Fn_theta_y, theta_x_3d, theta_y_3d, Fn_3d, x_3d, y_3d, Fn_xy] = computeAmplitudePattern(app, frequency)
+            % Параметры
+            Nx_total = 12; % Число вибраторов вдоль оси x (всего)
+            Ny_total = 12; % Число вибраторов вдоль оси y (всего)
+            Nx = app.SelectedRow; % Выбранный ряд Nx (индекс)
+            Ny = app.SelectedColumn; % Выбранный столбец Ny (индекс)
+            d = 25; % Расстояние между излучателями, м
+            c = 3e8; % Скорость света, м/с
+            ksi = 1; % Коэффициент замедления волны (в радианах, как угол)
+            theta_slider = deg2rad(app.ThetaSlider.Value); % Текущее значение theta (в радианах) из слайдера
+            theta_offset = 34; % Поправка в 34 градуса 
+            
+            % Вычисление волнового числа
+            f = frequency * 1e6; % Частота в Гц (перевод из МГц)
+            wavelength = c / f; % Длина волны, м
+            k = 2 * pi / wavelength; % Волновое число, радиан/м
+            
+            % 1. Зависимость Fn от psi (обобщённая угловая переменная)
+            psi_0 = (Nx_total * k * d / 2) * cos(theta_slider + theta_offset - ksi); % Смещение psi
+            psi_base = linspace(-10*pi, 10*pi, 1000); % Базовый диапазон psi (фиксированный для графика)
+            psi_shifted = psi_base + psi_0; % Смещённый psi для вычисления Fn
+            Fn_psi = abs(sin(psi_shifted) ./ (Nx_total * sin(psi_shifted / Nx_total)));
+            Fn_psi(isnan(Fn_psi) | isinf(Fn_psi)) = 1; % Устраняем неопределённости
+            
+            % 2. Зависимость Fn от theta_x и theta_y (для 3D-графика)
+            theta_x_3d = linspace(-pi/2, pi/2, 300); % Углы от -90 до 90 градусов (увеличили с 50 до 100)
+            theta_y_3d = linspace(-pi/2, pi/2, 300); % Углы от -90 до 90 градусов (увеличили с 50 до 100)
+            [theta_x_3d, theta_y_3d] = meshgrid(theta_x_3d, theta_y_3d);
+            Fn_3d = zeros(size(theta_x_3d)); % Инициализируем массив для Fn
+            
+            % Вычисляем координаты элементов решётки
+            x_positions = d * ((1:Nx_total) - (Nx_total + 1)/2); % Координаты x (центрированы вокруг 0)
+            y_positions = d * ((1:Ny_total) - (Ny_total + 1)/2); % Координаты y (центрированы вокруг 0)
+            
+            % Суммируем вклады всех элементов (с учётом двух диполей)
+            for i = 1:Nx_total
+                for j = 1:Ny_total
+                    for dipole_idx = 1:2
+                        A_ij = abs(app.Matrix(i, j, dipole_idx)); % Амплитуда элемента (i,j) для диполя
+                        phi_ij = angle(app.Matrix(i, j, dipole_idx)); % Фаза элемента (i,j) для диполя
+                        % Угол ориентации диполя (45° для первого диполя, 135° для второго)
+                        dipole_angle = (dipole_idx == 1) * pi/4 + (dipole_idx == 2) * (pi/4 + pi/2);
+                        % Фазовый сдвиг с учётом ориентации диполя
+                        phase = k * (x_positions(i) * cos(theta_x_3d + theta_offset - theta_slider - ksi) + ...
+                                    y_positions(j) * cos(theta_y_3d + theta_offset - ksi));
+                        % Учитываем ориентацию диполя (проекция на направление theta_x, theta_y)
+                        directional_factor = cos(dipole_angle - atan2(cos(theta_y_3d), cos(theta_x_3d)));
+                        Fn_3d = Fn_3d + A_ij * directional_factor .* exp(1i * (phi_ij + phase));
+                    end
+                end
+            end
+            Fn_3d = abs(Fn_3d); % Модуль комплексной суммы
+            max_Fn_3d = max(Fn_3d(:));
+            if max_Fn_3d > 0
+                Fn_3d = Fn_3d / max_Fn_3d; % Нормируем на максимум
+            else
+                Fn_3d = zeros(size(Fn_3d)); % Если все значения нулевые, устанавливаем нули
+            end
+            
+            % 2. Зависимость Fn от theta_x (срез из Fn_3d для выбранного ряда Nx)
+            theta_x = linspace(-pi/2, pi/2, 181); % Углы от -90 до 90 градусов (в радианах)
+
+            % Линейно отображаем Nx (1:12) на индексы theta_x_3d (1:100)
+            nx_idx = round(1 + (Nx - 1) * (100 - 1) / (12 - 1)); % Индекс для выбранного ряда Nx
+            nx_idx = max(1, min(100, nx_idx)); % Убедимся, что индекс в пределах допустимого
+
+            % Берем срез из Fn_3d вдоль фиксированного theta_x (по ряду Nx)
+            Fn_theta_x = interp1(theta_x_3d(1, :), Fn_3d(nx_idx, :), theta_x, 'linear'); % Интерполяция для более точного соответствия
+            Fn_theta_x(isnan(Fn_theta_x)) = 0; % Заменяем NaN на 0
+            max_Fn_theta_x = max(Fn_theta_x(:));
+            if max_Fn_theta_x > 0
+                Fn_theta_x = Fn_theta_x / max_Fn_theta_x; % Нормируем на максимум
+            else
+                Fn_theta_x = zeros(size(Fn_theta_x)); % Если все значения нулевые, устанавливаем нули
+            end
+
+            % 3. Зависимость Fn от theta_y (срез из Fn_3d для выбранного столбца Ny)
+            theta_y = linspace(-pi/2, pi/2, 181); % Углы от -90 до 90 градусов (в радианах)
+
+            % Линейно отображаем Ny (1:12) на индексы theta_y_3d (1:100)
+            ny_idx = round(1 + (Ny - 1) * (100 - 1) / (12 - 1)); % Индекс для выбранного столбца Ny
+            ny_idx = max(1, min(100, ny_idx)); % Убедимся, что индекс в пределах допустимого
+
+            % Берем срез из Fn_3d вдоль фиксированного theta_y (по столбцу Ny)
+            Fn_theta_y = interp1(theta_y_3d(:, 1), Fn_3d(:, ny_idx), theta_y, 'linear'); % Интерполяция для более точного соответствия
+            Fn_theta_y(isnan(Fn_theta_y)) = 0; % Заменяем NaN на 0
+            max_Fn_theta_y = max(Fn_theta_y(:));
+            if max_Fn_theta_y > 0
+                Fn_theta_y = Fn_theta_y / max_Fn_theta_y; % Нормируем на максимум
+            else
+                Fn_theta_y = zeros(size(Fn_theta_y)); % Если все значения нулевые, устанавливаем нули
+            end
+            
+            % 5. Трёхмерное отображение Fn(x, y) в декартовых координатах
+            % Используем тороидальную систему координат
+            R = 1; % Радиус большого круга тора
+            r = 0.5; % Радиус малого круга тора
+            x_3d = (R + r * cos(theta_y_3d)) .* cos(theta_x_3d);
+            y_3d = (R + r * cos(theta_y_3d)) .* sin(theta_x_3d);
+            
+            % Учитываем Якобиан перехода
+            jacobian = 1 ./ (sin(theta_x_3d).^2 .* sin(theta_y_3d).^2);
+            jacobian(abs(jacobian) < eps) = eps; % Избегаем деления на ноль
+            Fn_xy = Fn_3d .* jacobian; % Умножаем на Якобиан
+            Fn_xy(isnan(Fn_xy)) = 0; % Заменяем NaN на 0
+            max_Fn_xy = max(Fn_xy(:));
+            if max_Fn_xy > 0
+                Fn_xy = Fn_xy / max_Fn_xy; % Нормируем на максимум
+            else
+                Fn_xy = zeros(size(Fn_xy)); % Если все значения нулевые, устанавливаем нули
+            end
+
+            % Ограничиваем диапазон x, y для читаемости графика
+            mask = (abs(x_3d) <= 5) & (abs(y_3d) <= 5);
+            x_3d(~mask) = NaN;
+            y_3d(~mask) = NaN;
+            Fn_xy(~mask) = NaN;
+        end
+
+                   % Обновление графика "Амплитуда диполей по секциям"
+        function updatePlot(app)
+            % Вычисляем среднюю амплитуду по обоим диполям для отображения
+            amplitude = mean(abs(app.Matrix), 3); % Средняя амплитуда по третьему измерению (два диполя)
+            amplitude = flipud(amplitude); % Отражаем матрицу по вертикали
+            if isempty(app.UIAxes) || ~isvalid(app.UIAxes)
+                app.UIAxes = uiaxes(app.GridLayout);
+                app.UIAxes.Layout.Row = 1;
+                app.UIAxes.Layout.Column = 2;
+            end
+
+            % Очищаем оси
+            cla(app.UIAxes);
+            % Создаём тепловую карту с помощью image
+            hh = image(app.UIAxes, amplitude, 'CDataMapping', 'scaled');
+            colormap(app.UIAxes, 'jet');
+            colorbar(app.UIAxes);
+            axis(app.UIAxes, [0.5 12.5 0.5 12.5]); % Границы для 12x12 матрицы
+            
+            % Настраиваем метки осей
+            xticks(app.UIAxes, 1:12); % Метки по горизонтальной оси: 1, 2, ..., 12
+            yticks(app.UIAxes, 1:12); % Метки по вертикальной оси: 1, 2, ..., 12 снизу вверх
+            yticklabels(app.UIAxes, string(12:-1:1)); % Меняем метки по вертикали: 12 сверху, 1 снизу
+            
+            % Добавляем сетку
+            hold(app.UIAxes, 'on');
+            for k = 0.5:1:13 % Обновляем диапазон сетки для 12 элементов
+                plot(app.UIAxes, [k k], [0 13], 'k-', 'LineWidth', 0.5);
+                plot(app.UIAxes, [0 13], [k k], 'k-', 'LineWidth', 0.5);
+            end
+            hold(app.UIAxes, 'off');
+            title(app.UIAxes, 'Температурная карта интенсивности сигналов');
+            
+            % Добавляем обработчик события нажатия на тепловую карту
+            set(hh, 'ButtonDownFcn', @(src, event) app.ElementClicked(src, event));
+            
+            drawnow;
+        end
+
+        % Callback для нажатия на элемент тепловой карты
+        function ElementClicked(app, src, ~)
+            % Получаем координаты нажатия
+            clicked_point = app.UIAxes.CurrentPoint;
+            x = round(clicked_point(1, 1));
+            y = round(clicked_point(1, 2));
+            
+            % Проверяем, что нажатие произошло внутри допустимых границ матрицы
+            if x >= 1 && x <= 12 && y >= 1 && y <= 12
+                % Открываем окно редактирования для элемента (y, x)
+                app.EditElementWindow(y, x);
+            end
+        end
+
+        % Создание окна редактирования элемента матрицы
+        function EditElementWindow(app, i, j)
+            % Создаём новое окно
+            editFig = uifigure('Name', ['Редактирование элемента (' num2str(i) ',' num2str(j) ')'], ...
+                               'Position', [200 200 400 300], ...
+                               'CloseRequestFcn', @(src, event) delete(src));
+            
+            % Создаём сетку для размещения элементов интерфейса
+            editGrid = uigridlayout(editFig, [5 2]);
+            editGrid.RowHeight = {30, 30, 30, 30, 30};
+            editGrid.ColumnWidth = {'1x', '1x'};
+            
+            % Текущие значения комплексных чисел
+            complex1 = app.Matrix(i, j, 1);
+            complex2 = app.Matrix(i, j, 2);
+            amp1 = abs(complex1);
+            phase1 = angle(complex1) * 180 / pi; % Переводим фазу в градусы
+            amp2 = abs(complex2);
+            phase2 = angle(complex2) * 180 / pi; % Переводим фазу в градусы
+            
+            % Поля для первого диполя
+            label1 = uilabel(editGrid, 'Text', 'Диполь 1: Амплитуда', 'HorizontalAlignment', 'right');
+            label1.Layout.Row = 1;
+            label1.Layout.Column = 1;
+            
+            label2 = uilabel(editGrid, 'Text', 'Диполь 1: Фаза (градусы)', 'HorizontalAlignment', 'right');
+            label2.Layout.Row = 2;
+            label2.Layout.Column = 1;
+            
+            ampField1 = uieditfield(editGrid, 'numeric', 'Value', amp1);
+            ampField1.Layout.Row = 1;
+            ampField1.Layout.Column = 2;
+            
+            phaseField1 = uieditfield(editGrid, 'numeric', 'Value', phase1);
+            phaseField1.Layout.Row = 2;
+            phaseField1.Layout.Column = 2;
+            
+            % Поля для второго диполя
+            label3 = uilabel(editGrid, 'Text', 'Диполь 2: Амплитуда', 'HorizontalAlignment', 'right');
+            label3.Layout.Row = 3;
+            label3.Layout.Column = 1;
+            
+            label4 = uilabel(editGrid, 'Text', 'Диполь 2: Фаза (градусы)', 'HorizontalAlignment', 'right');
+            label4.Layout.Row = 4;
+            label4.Layout.Column = 1;
+            
+            ampField2 = uieditfield(editGrid, 'numeric', 'Value', amp2);
+            ampField2.Layout.Row = 3;
+            ampField2.Layout.Column = 2;
+            
+            phaseField2 = uieditfield(editGrid, 'numeric', 'Value', phase2);
+            phaseField2.Layout.Row = 4;
+            phaseField2.Layout.Column = 2;
+            
+            % Кнопка сохранения
+            saveButton = uibutton(editGrid, 'Text', 'Сохранить');
+            saveButton.Layout.Row = 5;
+            saveButton.Layout.Column = [1 2];
+            saveButton.ButtonPushedFcn = @(src, event) SaveElement(app, i, j, ampField1, phaseField1, ampField2, phaseField2, editFig);
+        end
+
+        % Сохранение изменений элемента матрицы
+        function SaveElement(app, i, j, ampField1, phaseField1, ampField2, phaseField2, editFig)
+            % Получаем новые значения
+            amp1 = ampField1.Value;
+            phase1 = deg2rad(phaseField1.Value); % Переводим фазу из градусов в радианы
+            amp2 = ampField2.Value;
+            phase2 = deg2rad(phaseField2.Value); % Переводим фазу из градусов в радианы
+            
+            % Обновляем комплексные числа
+            app.Matrix(i, j, 1) = amp1 * exp(1i * phase1);
+            app.Matrix(i, j, 2) = amp2 * exp(1i * phase2);
+            
+            % Обновляем графики
+            app.updatePlot();
+            app.updateDirectionPlots();
+            
+            % Закрываем окно редактирования
+            delete(editFig);
+            
+            % Сообщаем об успешном изменении
+            app.appendMessage(['Элемент (' num2str(i) ',' num2str(j) ') обновлён']);
+        end
+
+            % Открытие окна редактирования всей матрицы через таблицу
+        function OpenMatrixEditor(app)
+            % Создаём новое окно
+            matrixFig = uifigure('Name', 'Редактирование матрицы', ...
+                                 'Position', [200 200 800 600], ...
+                                 'CloseRequestFcn', @(src, event) delete(src));
+            
+            % Создаём сетку для размещения таблицы и кнопки
+            matrixGrid = uigridlayout(matrixFig, [2 1]);
+            matrixGrid.RowHeight = {'1x', 30};
+            matrixGrid.ColumnWidth = {'1x'};
+            
+            % Подготовка данных для таблицы
+            % Матрица app.Matrix имеет размер 12x12x2
+            % Мы создадим таблицу с колонками: Столбец, Ряд, Диполь 1: Амплитуда, Диполь 1: Фаза, Диполь 2: Амплитуда, Диполь 2: Фаза
+            numRows = 12 * 12; % 144 элемента
+            tableData = cell(numRows, 6);
+            rowIdx = 1;
+            for j = 1:12 % Сначала перебираем столбцы (слева направо)
+                for i = 1:12 % Затем перебираем строки (сверху вниз)
+                    % Столбец и ряд
+                    tableData{rowIdx, 1} = j; % Столбец
+                    tableData{rowIdx, 2} = i; % Ряд
+                    % Диполь 1
+                    complex1 = app.Matrix(i, j, 1);
+                    tableData{rowIdx, 3} = abs(complex1); % Амплитуда
+                    tableData{rowIdx, 4} = angle(complex1) * 180 / pi; % Фаза в градусах
+                    % Диполь 2
+                    complex2 = app.Matrix(i, j, 2);
+                    tableData{rowIdx, 5} = abs(complex2); % Амплитуда
+                    tableData{rowIdx, 6} = angle(complex2) * 180 / pi; % Фаза в градусах
+                    rowIdx = rowIdx + 1;
+                end
+            end
+            
+            % Создаём таблицу
+            matrixTable = uitable(matrixGrid);
+            matrixTable.Data = tableData;
+            matrixTable.ColumnName = {'Столбец', 'Ряд', 'Диполь 1: Амплитуда', 'Диполь 1: Фаза (град)', 'Диполь 2: Амплитуда', 'Диполь 2: Фаза (град)'};
+            matrixTable.ColumnEditable = [false false true true true true]; % Столбец и Ряд нельзя редактировать
+            matrixTable.ColumnFormat = {'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric'};
+            matrixTable.Layout.Row = 1;
+            matrixTable.Layout.Column = 1;
+            
+            % Кнопка сохранения
+            saveButton = uibutton(matrixGrid, 'Text', 'Сохранить');
+            saveButton.Layout.Row = 2;
+            saveButton.Layout.Column = 1;
+            saveButton.ButtonPushedFcn = @(src, event) SaveMatrixFromTable(app, matrixTable, matrixFig);
+        end
+
+                % Сохранение изменений матрицы из таблицы
+        function SaveMatrixFromTable(app, matrixTable, matrixFig)
+            % Получаем данные из таблицы
+            tableData = matrixTable.Data;
+            
+            % Обновляем матрицу app.Matrix
+            for rowIdx = 1:size(tableData, 1)
+                j = tableData{rowIdx, 1}; % Столбец
+                i = tableData{rowIdx, 2}; % Ряд
+                % Диполь 1
+                amp1 = tableData{rowIdx, 3};
+                phase1 = deg2rad(tableData{rowIdx, 4}); % Фаза в радианах
+                app.Matrix(i, j, 1) = amp1 * exp(1i * phase1);
+                % Диполь 2
+                amp2 = tableData{rowIdx, 5};
+                phase2 = deg2rad(tableData{rowIdx, 6}); % Фаза в радианах
+                app.Matrix(i, j, 2) = amp2 * exp(1i * phase2);
+            end
+            
+            % Обновляем графики
+            app.updatePlot();
+            app.updateDirectionPlots();
+            
+            % Закрываем окно редактирования
+            delete(matrixFig);
+            
+            % Сообщаем об успешном изменении
+            app.appendMessage('Матрица обновлена через таблицу');
+        end
+
+        % Обновление графиков направленности
+        function updateDirectionPlots(app)
+            frequency = app.FrequencySlider.Value;
+            [psi_base, Fn_psi, theta_x, Fn_theta_x, theta_y, Fn_theta_y, theta_x_3d, theta_y_3d, Fn_3d, x_3d, y_3d, Fn_xy] = computeAmplitudePattern(app, frequency);
+            
+            % График 1: Fn(psi)
+            cla(app.AxesPsi); % Очищаем оси перед перерисовкой
+            plot(app.AxesPsi, psi_base, Fn_psi, 'b-');
+            xlabel(app.AxesPsi, '\psi (радианы)');
+            ylabel(app.AxesPsi, 'F_n(\psi)');
+            title(app.AxesPsi, 'F_n( \psi)');
+            grid(app.AxesPsi, 'on')
+            
+            % График 2: Fn(theta_x) (вдоль оси x)
+            cla(app.AxesThetaX); % Очищаем оси перед перерисовкой
+            plot(app.AxesThetaX, rad2deg(theta_x), Fn_theta_x, 'r-');
+            xlabel(app.AxesThetaX, '\theta_x (градусы)');
+            ylabel(app.AxesThetaX, 'F_n(\theta_x) (нормализованная)');
+            title(app.AxesThetaX, ['F_n(\theta_x) (ряд ' num2str(app.SelectedRow) ')']);
+            grid(app.AxesThetaX, 'on');
+            
+            % График 3: Fn(theta_y) (вдоль оси y)
+            cla(app.AxesThetaY); % Очищаем оси перед перерисовкой
+            plot(app.AxesThetaY, rad2deg(theta_y), Fn_theta_y, 'g-');
+            xlabel(app.AxesThetaY, '\theta_y (градусы)');
+            ylabel(app.AxesThetaY, 'F_n(\theta_y) (нормализованная)');
+            title(app.AxesThetaY, ['F_n(\theta_y) (столбец ' num2str(app.SelectedColumn) ')']);
+            grid(app.AxesThetaY, 'on');
+            
+            % График 4: 3D отображение Fn(theta_x, theta_y) для всей решётки
+            cla(app.AxesTheta3D); % Очищаем оси перед перерисовкой
+            surf(app.AxesTheta3D, rad2deg(theta_x_3d), rad2deg(theta_y_3d), Fn_3d, 'EdgeColor', 'interp');
+            xlabel(app.AxesTheta3D, '\theta_x (градусы)');
+            ylabel(app.AxesTheta3D, '\theta_y (градусы)');
+            zlabel(app.AxesTheta3D, 'F_n(\theta_x, \theta_y)');
+            title(app.AxesTheta3D, 'F_n(\theta_x, \theta_y)');
+            colormap(app.AxesTheta3D, 'jet');
+            colorbar(app.AxesTheta3D);
+            grid(app.AxesTheta3D, 'on');
+            
+            % График 5: 3D отображение Fn(x, y)
+            cla(app.AxesXY); % Очищаем оси перед перерисовкой
+            surf(app.AxesXY, x_3d, y_3d, Fn_xy, 'EdgeColor', 'interp');
+            xlabel(app.AxesXY, 'x');
+            ylabel(app.AxesXY, 'y');
+            zlabel(app.AxesXY, 'F_n(x, y)');
+            title(app.AxesXY, 'F_n(x, y)');
+            colormap(app.AxesXY, 'jet');
+            colorbar(app.AxesXY);
+            grid(app.AxesXY, 'on');
+            
+            drawnow;
+        end
+        
+        % Callback для слайдера мощности секции 1
+        function PowerSlider1ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel1.Text = ['Мощность ПКВ-250-1 = ' num2str(powers(1), '%.2f') ' кВт'];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage(['Изменена мощность ПКВ-250-1 на ' num2str(powers(1), '%.2f') ' кВт']);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для слайдера мощности секции 2
+        function PowerSlider2ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel2.Text = ['Мощность ПКВ-250-2 = ' num2str(powers(2), '%.2f') ' кВт'];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage(['Изменена мощность ПКВ-250-2 на ' num2str(powers(2), '%.2f') ' кВт']);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для слайдера мощности секции 3
+        function PowerSlider3ValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.PowerLabel3.Text = ['Мощность ПКВ-250-3 = ' num2str(powers(3), '%.2f') ' кВт'];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage(['Изменена мощность ПКВ-250-3 на ' num2str(powers(3), '%.2f') ' кВт']);
+            
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+% Callback для слайдера частоты
+        function FrequencySliderValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.FrequencyLabel.Text = ['Частота передатчиков = ' num2str(frequency, '%.2f') ' МГц'];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+
+            % Вычисляем длину волны и волновое число
+            c = 3e8; % Скорость света, м/с
+            f = frequency * 1e6; % Частота в Гц (перевод из МГц)
+            wavelength = c / f; % Длина волны, м
+            k = 2 * pi / wavelength; % Волновое число, радиан/м
+
+            % Выводим сообщения
+            app.appendMessage(['']);
+            app.appendMessage(['Изменена частота на ' num2str(frequency, '%.2f') ' МГц']);
+            app.appendMessage(['Длина волны: ' num2str(wavelength) ' м']);
+            app.appendMessage(['Волновое число k: ' num2str(k) ' радиан/м']);
+            app.appendMessage(['']);
+
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для слайдера угла theta
+        function ThetaSliderValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.appendMessage(['']);
+            app.ThetaLabel.Text = ['Угол фазирования = ' num2str(theta, '%.2f') ' градусов'];
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            app.appendMessage(['Изменён угол фазирования θ на значение ' num2str(theta, '%.2f') ' градусов']);
+            app.appendMessage(['']);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для выпадающего списка ряда Nx
+        function RowDropDownValueChanged(app, ~)
+            app.SelectedRow = str2double(app.RowDropDown.Value);
+            app.appendMessage(['']);
+            app.appendMessage(['Выбран ряд Nx = ' num2str(app.SelectedRow)]);
+            app.appendMessage(['']);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для выпадающего списка столбца Ny
+        function ColumnDropDownValueChanged(app, ~)
+            app.SelectedColumn = str2double(app.ColumnDropDown.Value);
+            app.appendMessage(['']);
+            app.appendMessage(['Выбран столбец Ny = ' num2str(app.SelectedColumn)]);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+
+        % Callback для кнопки отладки ЭМП
+        function DirectionButtonPushed(app, ~)
+            app.appendMessage('Запрос параметров ЭМП');
+            frequency = app.FrequencySlider.Value;
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            
+            % Вычисляем параметры для отладочного вывода
+            c = 3e8; % Скорость света, м/с
+            f = frequency * 1e6; % Частота в Гц
+            wavelength = c / f; % Длина волны, м
+            k = 2 * pi / wavelength; % Волновое число, радиан/м
+            
+            % Максимум интенсивности в дальней зоне (используем Fn_3d)
+            [~, ~, ~, ~, ~, ~, ~, ~, Fn_3d, ~, ~, ~] = computeAmplitudePattern(app, frequency);
+            max_intensity_dB = 10 * log10(max(Fn_3d(:))); % Максимум в дБ
+            
+            % Выводим информацию
+            app.appendMessage(['Мощность ПКВ-250-1: ' num2str(powers(1)) ' кВт']);
+            app.appendMessage(['Мощность ПКВ-250-2: ' num2str(powers(2)) ' кВт']);
+            app.appendMessage(['Мощность ПКВ-250-3: ' num2str(powers(3)) ' кВт']);
+            app.appendMessage(['']);
+            app.appendMessage(['Частота излучения: ' num2str(frequency) ' МГц']);
+            app.appendMessage(['Длина волны: ' num2str(wavelength) ' м']);
+            app.appendMessage(['Волновое число k: ' num2str(k) ' радиан/м']);
+            app.appendMessage(['']);
+            app.appendMessage(['Максимум интенсивности в дальней зоне: ' num2str(max_intensity_dB) ' дБ']);
+            app.appendMessage(['']);
+            drawnow;
+        end
+        
+        % Callback для тумблера режима (X-мода или O-мода)
+        function ModeSwitchValueChanged(app, ~)
+            powers = [app.PowerSlider1.Value, app.PowerSlider2.Value, app.PowerSlider3.Value];
+            frequency = app.FrequencySlider.Value;
+            theta = app.ThetaSlider.Value;
+            app.appendMessage(['Изменён режим на ' app.ModeSwitch.Value]);
+            app.Matrix = initializeMatrix(app, powers, frequency, theta);
+            updatePlot(app);
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+        
+        % Callback для кнопки построения диаграммы направленности
+        function DNPButtonPushed(app, ~)
+            app.appendMessage('Построение характеристик направленности...');
+            updateDirectionPlots(app); % Обновляем графики направленности
+        end
+    end
+
+    methods (Access = public)
+
+        % Конструктор приложения
+        function app = DipoleMatrixApp7
+            % Создаем окно
+            app.UIFigure = uifigure('Name', 'Модель нагревного стенда СУРА');
+            app.UIFigure.Position = [100 100 1366 865];
+
+            % Создаём сетку 2×3 для разделения интерфейса
+            app.GridLayout = uigridlayout(app.UIFigure, [2 3]);
+            app.GridLayout.RowHeight = {'1x', '1x'};
+            app.GridLayout.ColumnWidth = {'1x', '2x', '5x'};
+            app.GridLayout.RowSpacing = 5; % Расстояние между строками
+            app.GridLayout.ColumnSpacing = 5; % Расстояние между столбцами
+            app.GridLayout.BackgroundColor = [0.7 0.7 0.7]; % Светло-серая линия разделения
+
+            % Левая верхняя часть: Слайдеры и кнопки
+            controlsPanel = uipanel(app.GridLayout);
+            controlsPanel.Layout.Row = 1;
+            controlsPanel.Layout.Column = 1;
+            controlsPanel.Title = 'Блок управления стендом СУРА';
+            controlsPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            % Слайдеры и метки для секции 1
+            app.PowerLabel1 = uilabel(controlsPanel);
+            app.PowerLabel1.Position = [20 360 200 22];
+            app.PowerLabel1.Text = 'Мощность ПКВ-250-1, кВт';
+            
+            app.PowerSlider1 = uislider(controlsPanel);
+            app.PowerSlider1.Limits = [0 300];
+            app.PowerSlider1.Value = 6.25;
+            app.PowerSlider1.Position = [20 350 275 3];
+            app.PowerSlider1.MajorTicks = [0:50:300];
+            app.PowerSlider1.ValueChangedFcn = @(src, event) app.PowerSlider1ValueChanged;
+
+            % Слайдеры и метки для секции 2
+            app.PowerLabel2 = uilabel(controlsPanel);
+            app.PowerLabel2.Position = [20 295 200 22];
+            app.PowerLabel2.Text = 'Мощность ПКВ-250-2, кВт';
+            
+            app.PowerSlider2 = uislider(controlsPanel);
+            app.PowerSlider2.Limits = [0 300];
+            app.PowerSlider2.Value = 6.25;
+            app.PowerSlider2.Position = [20 285 275 3];
+            app.PowerSlider2.MajorTicks = [0:50:300];
+            app.PowerSlider2.ValueChangedFcn = @(src, event) app.PowerSlider2ValueChanged;
+
+            % Слайдеры и метки для секции 3
+            app.PowerLabel3 = uilabel(controlsPanel);
+            app.PowerLabel3.Position = [20 230 200 30];
+            app.PowerLabel3.Text = 'Мощность ПКВ-250-3, кВт';
+            
+            app.PowerSlider3 = uislider(controlsPanel);
+            app.PowerSlider3.Limits = [0 300];
+            app.PowerSlider3.Value = 6.25;
+            app.PowerSlider3.Position = [20 220 275 22];
+            app.PowerSlider3.MajorTicks = [0:50:300];
+            app.PowerSlider3.ValueChangedFcn = @(src, event) app.PowerSlider3ValueChanged;
+
+            % Единый слайдер и метка для частоты
+            app.FrequencyLabel = uilabel(controlsPanel);
+            app.FrequencyLabel.Position = [20 170 200 22];
+            app.FrequencyLabel.Text = 'Частота передатчиков, МГц';
+            
+            app.FrequencySlider = uislider(controlsPanel);
+            app.FrequencySlider.Limits = [3 10];
+            app.FrequencySlider.Value = 5;
+            app.FrequencySlider.Position = [20 160 275 3];
+            app.FrequencySlider.MajorTicks = [3:1:10];
+            app.FrequencySlider.ValueChangedFcn = @(src, event) app.FrequencySliderValueChanged;
+            
+            % Слайдер и метка для угла theta
+            app.ThetaLabel = uilabel(controlsPanel);
+            app.ThetaLabel.Position = [20 110 200 22];
+            app.ThetaLabel.Text = 'Угол фазирования, градусы';
+            
+            app.ThetaSlider = uislider(controlsPanel);
+            app.ThetaSlider.Limits = [-40 40];
+            app.ThetaSlider.Value = 0; % Начальное значение 0 градусов
+            app.ThetaSlider.Position = [20 100 275 3];
+            app.ThetaSlider.MajorTicks = [-40:10:40];
+            app.ThetaSlider.ValueChangedFcn = @(src, event) app.ThetaSliderValueChanged;
+            
+            % Выпадающий список для выбора ряда Nx
+            app.RowLabel = uilabel(controlsPanel);
+            app.RowLabel.Position = [50 45 200 22];
+            app.RowLabel.Text = 'Выбор ряда Nx';
+            
+            app.RowDropDown = uidropdown(controlsPanel);
+            app.RowDropDown.Items = string(1:12); % Список рядов от 1 до 12
+            app.RowDropDown.Value = '1'; % Начальное значение
+            app.RowDropDown.Position = [50 25 90 22];
+            app.RowDropDown.ValueChangedFcn = @(src, event) app.RowDropDownValueChanged;
+            
+            % Выпадающий список для выбора столбца Ny
+            app.ColumnLabel = uilabel(controlsPanel);
+            app.ColumnLabel.Position = [170 45 200 22];
+            app.ColumnLabel.Text = 'Выбор столбца Ny';
+            
+            app.ColumnDropDown = uidropdown(controlsPanel);
+            app.ColumnDropDown.Items = string(1:12); % Список столбцов от 1 до 12
+            app.ColumnDropDown.Value = '1'; % Начальное значение
+            app.ColumnDropDown.Position = [170 25 90 22];
+            app.ColumnDropDown.ValueChangedFcn = @(src, event) app.ColumnDropDownValueChanged;
+            
+            % Тумблер для выбора режима (X-мода или O-мода)
+            app.ModeSwitch = uiswitch(controlsPanel, 'slider');
+            app.ModeSwitch.Position = [130 -5 90 22];
+            app.ModeSwitch.Items = {'X-мода', 'O-мода'};
+            app.ModeSwitch.Value = 'X-мода'; % Начальное значение
+            app.ModeSwitch.ValueChangedFcn = @(src, event) app.ModeSwitchValueChanged;
+
+            % Кнопка для отладки ЭМП
+            app.DirectionButton = uicontrol(controlsPanel, 'Style', 'pushbutton');
+            app.DirectionButton.String = 'Отладочный вывод ЭМП';
+            app.DirectionButton.Position = [20 -30 90 22];
+            app.DirectionButton.Callback = @(src, event) app.DirectionButtonPushed(app);
+            
+            % Кнопка для построения диаграммы направленности
+            app.DNPButton = uicontrol(controlsPanel, 'Style', 'pushbutton');
+            app.DNPButton.String = 'Построение ДН';
+            app.DNPButton.Position = [130 -30 90 22];
+            app.DNPButton.Callback = @(src, event) app.DNPButtonPushed(app);
+
+            % Средняя верхняя часть: График "Амплитуда диполей по секциям"
+            intensityPanel = uipanel(app.GridLayout);
+            intensityPanel.Layout.Row = 1;
+            intensityPanel.Layout.Column = 2;
+            intensityPanel.Title = 'Блок управления и мониторинга параметров сигналов излучателей';
+            intensityPanel.BackgroundColor = [0.95 0.95 0.95];
+
+            app.UIAxes = uiaxes(intensityPanel);
+            app.UIAxes.Position = [10 40 400 270]; % Уменьшаем высоту графика, чтобы уместить кнопку
+            
+            % Добавляем кнопку "Ввод данных" под тепловой картой
+            dataButton = uibutton(intensityPanel, 'Text', 'Ввод данных');
+            dataButton.Position = [25 140 100 22];
+            dataButton.ButtonPushedFcn = @(src, event) app.OpenMatrixEditor();
+
+            % Левая нижняя часть: Центр контроля и отладки
+            debugPanel = uipanel(app.GridLayout);
+            debugPanel.Layout.Row = 2;
+            debugPanel.Layout.Column = [1 2];
+            debugPanel.Title = 'Центр контроля и отладки';
+            debugPanel.BackgroundColor = [0.95 0.95 0.95];
+            
+            app.TextArea = uitextarea(debugPanel);
+            app.TextArea.Position = [10 10 580 150];
+            app.TextArea.Editable = 'off';
+
+            % Правая часть: Графики направленности
+            directionPanel = uipanel(app.GridLayout);
+            directionPanel.Layout.Row = [1 2];
+            directionPanel.Layout.Column = 3;
+            directionPanel.Title = 'Поле в дальней зоне';
+            directionPanel.BackgroundColor = [0.95 0.95 0.95];
+            
+            % Создаём внутреннюю сетку для графиков направленности
+            directionGrid = uigridlayout(directionPanel, [2 3]);
+            directionGrid.RowHeight = {'1x', '1x'};
+            directionGrid.ColumnWidth = {'1x', '1x', '1x'};
+            directionGrid.RowSpacing = 5;
+            directionGrid.ColumnSpacing = 5;
+            
+            % Создаём оси для графиков направленности
+            app.AxesPsi = uiaxes(directionGrid);
+            app.AxesPsi.Layout.Row = 1;
+            app.AxesPsi.Layout.Column = 1;
+            
+            app.AxesThetaX = uiaxes(directionGrid);
+            app.AxesThetaX.Layout.Row = 1;
+            app.AxesThetaX.Layout.Column = 2;
+            
+            app.AxesThetaY = uiaxes(directionGrid);
+            app.AxesThetaY.Layout.Row = 1;
+            app.AxesThetaY.Layout.Column = 3;
+            
+            app.AxesTheta3D = uiaxes(directionGrid);
+            app.AxesTheta3D.Layout.Row = 2;
+            app.AxesTheta3D.Layout.Column = [1 2];
+            
+            app.AxesXY = uiaxes(directionGrid);
+            app.AxesXY.Layout.Row = 2;
+            app.AxesXY.Layout.Column = 3;
+
+            % Инициализация
+            startupFcn(app);
+        end
+    end
+
+    % Запуск приложения
+    methods (Static)
+        function run()
+            app = DipoleMatrixApp7;
+            disp('Интерфейс запущен.');
+        end
+    end
+end
+##### SOURCE END #####
+-->
+</body>
+</html>

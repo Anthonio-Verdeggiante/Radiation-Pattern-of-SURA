@@ -1,0 +1,4 @@
+This product has been developed as a programm which may decide the problem of directivity patterns created by antennas array.
+The version like this one does consider the reflection from Earth. The advantages of this approach are modeling and illustration the array factor, which close to real conditions. It could be different in dependence from the parameters of emissions, such as: power, frequency, phase shift, polarization mode, rms value of amplitude and phase separately, also like non-reflect model.
+
+

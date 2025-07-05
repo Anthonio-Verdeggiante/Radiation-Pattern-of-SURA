@@ -1,0 +1,7 @@
+Model_of_SURA_without_reflect Executable
+
+This product has been developed as a programm which may decide the problem of directivity patterns created by antennas array.
+The version like this one does not consider the reflection from Earth. The advantages of this approach are modeling and illustration the array factor as a clear figure, which could be different in dependence from the parameters of emissions, such as: power, frequency, phase shift, polarization mode, rms value of amplitude and phase separately.
+
+
+
